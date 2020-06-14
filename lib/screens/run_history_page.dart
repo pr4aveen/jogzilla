@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:jogzilla/screens/run_config_page.dart';
 
-import '../constants.dart';
 import '../models/run_data.dart';
 import '../widgets/run_history_tile.dart';
 import '../widgets/navigation_drawer.dart';
 
-class RunHistory extends StatelessWidget {
+class RunHistoryPage extends StatelessWidget {
+  static const String routeName = 'run_history_page';
   final List<RunData> sampleData = [
     RunData(
       dateTime: 'June 11, 2020 at 10:15 AM',
@@ -49,7 +50,6 @@ class RunHistory extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Run History'),
-        elevation: 0.0,
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -61,18 +61,23 @@ class RunHistory extends StatelessWidget {
       ),
       drawer: NavigationDrawer(),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => print('Start New Run'),
+        onPressed: () => Navigator.pushNamed(context, RunConfigPage.routeName),
         label: Text('Start New Run'),
-        backgroundColor: Colors.redAccent,
+        backgroundColor: Theme.of(context).primaryColor,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      backgroundColor: kDarkBackground,
       body: CustomScrollView(
         slivers: <Widget>[
           SliverToBoxAdapter(
             child: Container(
-              color: kRedAccent,
+              color: Theme.of(context).primaryColor,
               height: 350,
+              child: Center(
+                child: Text(
+                  'SUMMARY STATISTICS',
+                  style: TextStyle(fontSize: 32),
+                ),
+              ),
             ),
           ),
           SliverList(

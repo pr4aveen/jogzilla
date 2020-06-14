@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../screens/detailed_run_history.dart';
+import '../screens/detailed_run_history_page.dart';
 import '../models/run_data.dart';
 
 class RunHistoryTile extends StatelessWidget {
@@ -11,11 +11,8 @@ class RunHistoryTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => DetailedRunHistory(runData: data)),
-        );
+        Navigator.of(context)
+            .pushNamed(DetailedRunHistoryPage.routeName, arguments: data);
       },
       child: Padding(
         padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),

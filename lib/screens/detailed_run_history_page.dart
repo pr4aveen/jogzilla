@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../models/run_data.dart';
-import '../constants.dart';
 
-class DetailedRunHistory extends StatelessWidget {
+class DetailedRunHistoryPage extends StatelessWidget {
+  static const String routeName = 'detailed_run_history_page';
   final RunData runData;
 
-  DetailedRunHistory({@required this.runData});
+  DetailedRunHistoryPage({@required this.runData});
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +14,6 @@ class DetailedRunHistory extends StatelessWidget {
       appBar: AppBar(
         title: Text(runData.description),
       ),
-      backgroundColor: kDarkBackground,
     );
   }
 }
