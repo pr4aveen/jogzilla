@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import './screens/run_history.dart';
+import './screens/run_history_page.dart';
 
 void main() {
   runApp(MyApp());

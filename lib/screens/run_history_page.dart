@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 import '../constants.dart';
 import '../models/run_data.dart';
 import '../widgets/run_history_tile.dart';
-
-// consider using normal appbar and unpinned sliverappbar for statistics page.
-// grey colur seperation (vertical) for run metrics
+import '../widgets/navigation_drawer.dart';
 
 class RunHistory extends StatelessWidget {
   final List<RunData> sampleData = [
@@ -25,7 +23,7 @@ class RunHistory extends StatelessWidget {
     ),
     RunData(
       dateTime: 'June 8, 2020 at 10:03 PM',
-      distance: '3.00 km km',
+      distance: '3.00 km',
       pace: '12.00 /km',
       duration: '15m 00s',
       description: 'Late night jog',
@@ -49,16 +47,33 @@ class RunHistory extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Run History'),
+        elevation: 0.0,
+        actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Icon(
+              Icons.add,
+            ),
+          ),
+        ],
+      ),
+      drawer: NavigationDrawer(),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => print('Start New Run'),
+        label: Text('Start New Run'),
+        backgroundColor: Colors.redAccent,
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       backgroundColor: kDarkBackground,
       body: CustomScrollView(
         slivers: <Widget>[
-          SliverAppBar(
-            expandedHeight: 350.0,
-            flexibleSpace: const FlexibleSpaceBar(
-              centerTitle: true,
-              title: Text('STATISTICS'),
+          SliverToBoxAdapter(
+            child: Container(
+              color: kRedAccent,
+              height: 350,
             ),
-            pinned: true,
           ),
           SliverList(
             delegate: SliverChildBuilderDelegate(
