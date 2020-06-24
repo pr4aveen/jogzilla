@@ -11,9 +11,13 @@ class RunConfigPage extends StatelessWidget {
           'Start New Run',
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-          onPressed: () =>
-              Navigator.pushNamed(context, RunProgressPage.routeName)),
+      floatingActionButton: FloatingActionButton.extended(
+        backgroundColor: Theme.of(context).primaryColor,
+        label: Text('Start Run'),
+        onPressed: () =>
+            Navigator.pushNamed(context, RunProgressPage.routeName),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

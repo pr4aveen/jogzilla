@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 
+import '../widgets/placeholder_widget.dart';
+import '../widgets/run_progress_card.dart';
+
 class RunProgressPage extends StatefulWidget {
   static const String routeName = 'run_progress_page';
 
@@ -65,13 +68,12 @@ class _RunProgressPageState extends State<RunProgressPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Current Run'),
+        backgroundColor: Theme.of(context).primaryColor,
+      ),
       body: FutureBuilder<GeolocationStatus>(
         future: Geolocator().checkGeolocationPermissionStatus(
             locationPermission: GeolocationPermission.locationWhenInUse),
@@ -95,14 +97,25 @@ class _RunProgressPageState extends State<RunProgressPage> {
                     child: RunProgressCard(
                       cardText: '${_totalDistance.toStringAsFixed(2)} km',
                       textSize: 48,
+                      backgroundColor: Theme.of(context).accentColor,
                     ),
                   ),
                   Expanded(
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: <Widget>[
-                        Expanded(child: RunProgressCard(cardText: '12m 34s')),
-                        Expanded(child: RunProgressCard(cardText: '15 km/h'))
+                        Expanded(
+                          child: RunProgressCard(
+                            cardText: '12m 34s',
+                            backgroundColor: Theme.of(context).accentColor,
+                          ),
+                        ),
+                        Expanded(
+                          child: RunProgressCard(
+                            cardText: '15 km/h',
+                            backgroundColor: Theme.of(context).accentColor,
+                          ),
+                        )
                       ],
                     ),
                   ),
@@ -111,15 +124,24 @@ class _RunProgressPageState extends State<RunProgressPage> {
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        GestureDetector(
-                          child: Expanded(
-                              child: RunProgressCard(cardText: 'PAUSE')),
-                          onTap: _toggleListening,
+                        Expanded(
+                          child: GestureDetector(
+                              child: RunProgressCard(
+                                cardText: 'PAUSE',
+                                backgroundColor: Colors.yellow,
+                                textColor: Colors.black,
+                              ),
+                              onTap: _toggleListening),
                         ),
-                        GestureDetector(
-                          child: Expanded(
-                              child: RunProgressCard(cardText: 'STOP')),
-                          onLongPress: _toggleListening,
+                        Expanded(
+                          child: GestureDetector(
+                            child: RunProgressCard(
+                              cardText: 'STOP',
+                              backgroundColor: Colors.red,
+                              textColor: Colors.black,
+                            ),
+                            onLongPress: _toggleListening,
+                          ),
                         )
                       ],
                     ),
@@ -135,54 +157,4 @@ class _RunProgressPageState extends State<RunProgressPage> {
 
   // bool _isListening() => !(_positionStreamSubscription == null ||
   //     _positionStreamSubscription.isPaused);
-}
-
-class RunProgressCard extends StatelessWidget {
-  final String cardText;
-  final double textSize;
-
-  RunProgressCard({@required this.cardText, this.textSize = 32.0});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Center(
-        child: Text(
-          cardText,
-          style: TextStyle(
-            fontSize: textSize,
-          ),
-        ),
-      ),
-      margin: EdgeInsets.all(15.0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-    );
-  }
-}
-
-class PlaceholderWidget extends StatelessWidget {
-  const PlaceholderWidget(this.title, this.message);
-
-  final String title;
-  final String message;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Text(title,
-              style: const TextStyle(fontSize: 32.0),
-              textAlign: TextAlign.center),
-          Text(message,
-              style: const TextStyle(fontSize: 16.0),
-              textAlign: TextAlign.center),
-        ],
-      ),
-    );
-  }
 }
