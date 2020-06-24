@@ -69,6 +69,7 @@ class RunHistoryPage extends StatelessWidget {
       body: CustomScrollView(
         slivers: <Widget>[
           SliverToBoxAdapter(
+            // placeholder until statistics widget is ready
             child: Container(
               color: Theme.of(context).primaryColor,
               height: 350,
