@@ -17,6 +17,7 @@ class RunProgressPage extends StatefulWidget {
 class _RunProgressPageState extends State<RunProgressPage> {
   final List<Position> _positions = [];
   double _totalDistance = 0.0;
+  bool _listening = false;
 
   String _timeToDisplay = "00h 00m 00s";
   double _avgSpeed = 0.0;
@@ -24,7 +25,7 @@ class _RunProgressPageState extends State<RunProgressPage> {
   StopwatchService stopwatchService;
   LocationService locationService;
 
-  void stopwatchCallback(
+  void _stopwatchCallback(
       {String hours, String minutes, String seconds, int totalSeconds}) {
     setState(() {
       _timeToDisplay = '${hours}h ${minutes}m ${seconds}s';
@@ -32,20 +33,32 @@ class _RunProgressPageState extends State<RunProgressPage> {
     });
   }
 
-  void locationServiceCallback({double distance, Position position}) {
-    setState(() {
-      _totalDistance += distance / 1000;
-    });
-    _positions.add(position);
+  void _locationServiceCallback(
+      {double distance, Position position, bool listening}) {
+    if (distance != null && position != null) {
+      setState(() {
+        _totalDistance += distance / 1000;
+      });
+      _positions.add(position);
+    } else {
+      setState(() {
+        _listening = listening;
+      });
+    }
+  }
+
+  void _toggle() {
+    locationService.toggleListening();
+    stopwatchService.toggleStopwatch();
   }
 
   @override
   void initState() {
     super.initState();
     stopwatchService =
-        StopwatchService(timeToDisplayCallback: stopwatchCallback);
+        StopwatchService(timeToDisplayCallback: _stopwatchCallback);
     locationService =
-        LocationService(locationServiceCallback: locationServiceCallback);
+        LocationService(locationServiceCallback: _locationServiceCallback);
   }
 
   @override
@@ -109,19 +122,20 @@ class _RunProgressPageState extends State<RunProgressPage> {
                     ),
                   ),
                   Expanded(
-                    child: locationService.isListening()
+                    child: _listening
                         ? Row(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
                               Expanded(
                                 child: GestureDetector(
-                                    child: RunProgressCard(
-                                      cardText: 'PAUSE',
-                                      backgroundColor: Colors.yellow,
-                                      textColor: Colors.black,
-                                    ),
-                                    onTap: locationService.toggleListening),
+                                  child: RunProgressCard(
+                                    cardText: 'PAUSE',
+                                    backgroundColor: Colors.yellow,
+                                    textColor: Colors.black,
+                                  ),
+                                  onTap: _toggle,
+                                ),
                               ),
                               Expanded(
                                 child: GestureDetector(
@@ -130,7 +144,7 @@ class _RunProgressPageState extends State<RunProgressPage> {
                                     backgroundColor: Colors.red,
                                     textColor: Colors.black,
                                   ),
-                                  onLongPress: locationService.toggleListening,
+                                  onLongPress: null,
                                 ),
                               )
                             ],
@@ -141,7 +155,8 @@ class _RunProgressPageState extends State<RunProgressPage> {
                               backgroundColor: Colors.green,
                               textColor: Colors.black,
                             ),
-                            onTap: locationService.toggleListening),
+                            onTap: _toggle,
+                          ),
                   ),
                 ],
               ),

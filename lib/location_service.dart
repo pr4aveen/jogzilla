@@ -37,8 +37,10 @@ class LocationService {
 
     if (_positionStreamSubscription.isPaused) {
       _positionStreamSubscription.resume();
+      locationServiceCallback(listening: true);
     } else {
       _positionStreamSubscription.pause();
+      locationServiceCallback(listening: false);
     }
   }
 

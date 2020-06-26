@@ -31,12 +31,12 @@ class StopwatchService {
     Timer(_duration, _keepRunning);
   }
 
-  void startStopwatch() {
-    _stopwatch.start();
-    _startTimer();
-  }
-
-  void pauseStopwatch() {
-    _stopwatch.stop();
+  void toggleStopwatch() {
+    if (_stopwatch.isRunning) {
+      _stopwatch.stop();
+    } else {
+      _stopwatch.start();
+      _startTimer();
+    }
   }
 }
