@@ -15,9 +15,45 @@ class RunProgressPage extends StatefulWidget {
 
 class _RunProgressPageState extends State<RunProgressPage> {
   StreamSubscription<Position> _positionStreamSubscription;
-  final List<Position> _positions = <Position>[];
+  final List<Position> _positions = [];
   double _totalDistance = 0.0;
   Position _prev;
+
+  double _avgSpeed = 0.0;
+
+  Stopwatch _stopwatch = Stopwatch();
+  String _timeToDisplay = "00h 00m 00s";
+  final duration = const Duration(seconds: 1);
+
+  void keepRunning() {
+    if (_stopwatch.isRunning) {
+      startTimer();
+    }
+    setState(() {
+      _timeToDisplay = _stopwatch.elapsed.inHours.toString().padLeft(2, '0') +
+          'h ' +
+          (_stopwatch.elapsed.inMinutes % 60).toString().padLeft(2, '0') +
+          'm ' +
+          (_stopwatch.elapsed.inSeconds % 60).toString().padLeft(2, '0') +
+          's ';
+      _avgSpeed = _totalDistance * 1000 / _stopwatch.elapsed.inSeconds;
+    });
+  }
+
+  void startTimer() {
+    Timer(duration, keepRunning);
+  }
+
+  void startStopwatch() {
+    _stopwatch.start();
+    startTimer();
+  }
+
+  void pauseStopwatch() {
+    _stopwatch.stop();
+  }
+
+  void stopStopwatch() {}
 
   Future<void> _getDistance(Position prev, Position cur) async {
     Geolocator()
@@ -51,8 +87,10 @@ class _RunProgressPageState extends State<RunProgressPage> {
     setState(() {
       if (_positionStreamSubscription.isPaused) {
         _positionStreamSubscription.resume();
+        startStopwatch();
       } else {
         _positionStreamSubscription.pause();
+        pauseStopwatch();
       }
     });
   }
@@ -63,7 +101,6 @@ class _RunProgressPageState extends State<RunProgressPage> {
       _positionStreamSubscription.cancel();
       _positionStreamSubscription = null;
     }
-
     super.dispose();
   }
 
@@ -106,13 +143,15 @@ class _RunProgressPageState extends State<RunProgressPage> {
                       children: <Widget>[
                         Expanded(
                           child: RunProgressCard(
-                            cardText: '12m 34s',
+                            cardText: _timeToDisplay,
+                            textSize: 28,
                             backgroundColor: Theme.of(context).accentColor,
                           ),
                         ),
                         Expanded(
                           child: RunProgressCard(
-                            cardText: '15 km/h',
+                            cardText: '${_avgSpeed.toStringAsFixed(2)} km/h',
+                            textSize: 28,
                             backgroundColor: Theme.of(context).accentColor,
                           ),
                         )
@@ -120,32 +159,39 @@ class _RunProgressPageState extends State<RunProgressPage> {
                     ),
                   ),
                   Expanded(
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Expanded(
-                          child: GestureDetector(
+                      child: _isListening()
+                          ? Row(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                Expanded(
+                                  child: GestureDetector(
+                                      child: RunProgressCard(
+                                        cardText: 'PAUSE',
+                                        backgroundColor: Colors.yellow,
+                                        textColor: Colors.black,
+                                      ),
+                                      onTap: _toggleListening),
+                                ),
+                                Expanded(
+                                  child: GestureDetector(
+                                    child: RunProgressCard(
+                                      cardText: 'STOP',
+                                      backgroundColor: Colors.red,
+                                      textColor: Colors.black,
+                                    ),
+                                    onLongPress: _toggleListening,
+                                  ),
+                                )
+                              ],
+                            )
+                          : GestureDetector(
                               child: RunProgressCard(
-                                cardText: 'PAUSE',
-                                backgroundColor: Colors.yellow,
+                                cardText: 'START',
+                                backgroundColor: Colors.green,
                                 textColor: Colors.black,
                               ),
-                              onTap: _toggleListening),
-                        ),
-                        Expanded(
-                          child: GestureDetector(
-                            child: RunProgressCard(
-                              cardText: 'STOP',
-                              backgroundColor: Colors.red,
-                              textColor: Colors.black,
-                            ),
-                            onLongPress: _toggleListening,
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                              onTap: _toggleListening)),
                 ],
               ),
             ),
@@ -155,6 +201,6 @@ class _RunProgressPageState extends State<RunProgressPage> {
     );
   }
 
-  // bool _isListening() => !(_positionStreamSubscription == null ||
-  //     _positionStreamSubscription.isPaused);
+  bool _isListening() => !(_positionStreamSubscription == null ||
+      _positionStreamSubscription.isPaused);
 }
