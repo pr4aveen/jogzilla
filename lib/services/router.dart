@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import './screens/detailed_run_history_page.dart';
-import './screens/run_history_page.dart';
-import './screens/run_config_page.dart';
-import './screens/settings_page.dart';
-import './screens/run_progress_page.dart';
+import '../screens/detailed_run_history_page.dart';
+import '../screens/run_config_page.dart';
+import '../screens/run_history_page.dart';
+import '../screens/run_progress_page.dart';
+import '../screens/settings_page.dart';
 
 class RouteGenerator {
   static String initialRoute = RunHistoryPage.routeName;

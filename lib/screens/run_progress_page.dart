@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:jogzilla/location_service.dart';
 
+import '../services/location_service.dart';
+import '../services/stopwatch_service.dart';
 import '../widgets/placeholder_widget.dart';
 import '../widgets/run_progress_card.dart';
-import '../stopwatch_service.dart';
-import '../location_service.dart';
 
 class RunProgressPage extends StatefulWidget {
   static const String routeName = 'run_progress_page';

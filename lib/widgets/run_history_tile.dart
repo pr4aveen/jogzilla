@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../screens/detailed_run_history_page.dart';
 import '../models/run_data.dart';
+import '../screens/detailed_run_history_page.dart';
 
 class RunHistoryTile extends StatelessWidget {
   final RunData data;

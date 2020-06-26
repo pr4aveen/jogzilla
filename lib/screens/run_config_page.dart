@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jogzilla/screens/run_progress_page.dart';
+
+import './run_progress_page.dart';
 
 class RunConfigPage extends StatelessWidget {
   static const String routeName = 'run_config_page';
