@@ -1,11 +1,11 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:jogzilla/location_service.dart';
 
 import '../widgets/placeholder_widget.dart';
 import '../widgets/run_progress_card.dart';
 import '../stopwatch_service.dart';
+import '../location_service.dart';
 
 class RunProgressPage extends StatefulWidget {
   static const String routeName = 'run_progress_page';
@@ -15,15 +15,14 @@ class RunProgressPage extends StatefulWidget {
 }
 
 class _RunProgressPageState extends State<RunProgressPage> {
-  StreamSubscription<Position> _positionStreamSubscription;
   final List<Position> _positions = [];
   double _totalDistance = 0.0;
-  Position _prev;
 
   String _timeToDisplay = "00h 00m 00s";
   double _avgSpeed = 0.0;
 
   StopwatchService stopwatchService;
+  LocationService locationService;
 
   void stopwatchCallback(
       {String hours, String minutes, String seconds, int totalSeconds}) {
@@ -33,60 +32,25 @@ class _RunProgressPageState extends State<RunProgressPage> {
     });
   }
 
-  Future<void> _getDistance(Position prev, Position cur) async {
-    Geolocator()
-        .distanceBetween(
-            prev.latitude, prev.longitude, cur.latitude, cur.longitude)
-        .then(
-      (value) {
-        setState(() {
-          _totalDistance += value / 1000;
-        });
-      },
-    );
-  }
-
-  void _toggleListening() {
-    if (_positionStreamSubscription == null) {
-      const LocationOptions locationOptions =
-          LocationOptions(accuracy: LocationAccuracy.best);
-      final Stream<Position> positionStream =
-          Geolocator().getPositionStream(locationOptions);
-      _positionStreamSubscription = positionStream.listen(
-        (Position position) async {
-          _positions.add(position);
-          await _getDistance(_prev ?? position, position)
-              .then((_) => _prev = position);
-        },
-      );
-      _positionStreamSubscription.pause();
-    }
-
+  void locationServiceCallback({double distance, Position position}) {
     setState(() {
-      if (_positionStreamSubscription.isPaused) {
-        _positionStreamSubscription.resume();
-        stopwatchService.startStopwatch();
-      } else {
-        _positionStreamSubscription.pause();
-        stopwatchService.pauseStopwatch();
-      }
+      _totalDistance += distance / 1000;
     });
+    _positions.add(position);
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     stopwatchService =
         StopwatchService(timeToDisplayCallback: stopwatchCallback);
+    locationService =
+        LocationService(locationServiceCallback: locationServiceCallback);
   }
 
   @override
   void dispose() {
-    if (_positionStreamSubscription != null) {
-      _positionStreamSubscription.cancel();
-      _positionStreamSubscription = null;
-    }
+    locationService.dispose();
     super.dispose();
   }
 
@@ -145,7 +109,7 @@ class _RunProgressPageState extends State<RunProgressPage> {
                     ),
                   ),
                   Expanded(
-                    child: _isListening()
+                    child: locationService.isListening()
                         ? Row(
                             crossAxisAlignment: CrossAxisAlignment.stretch,
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -157,7 +121,7 @@ class _RunProgressPageState extends State<RunProgressPage> {
                                       backgroundColor: Colors.yellow,
                                       textColor: Colors.black,
                                     ),
-                                    onTap: _toggleListening),
+                                    onTap: locationService.toggleListening),
                               ),
                               Expanded(
                                 child: GestureDetector(
@@ -166,7 +130,7 @@ class _RunProgressPageState extends State<RunProgressPage> {
                                     backgroundColor: Colors.red,
                                     textColor: Colors.black,
                                   ),
-                                  onLongPress: _toggleListening,
+                                  onLongPress: locationService.toggleListening,
                                 ),
                               )
                             ],
@@ -177,7 +141,7 @@ class _RunProgressPageState extends State<RunProgressPage> {
                               backgroundColor: Colors.green,
                               textColor: Colors.black,
                             ),
-                            onTap: _toggleListening),
+                            onTap: locationService.toggleListening),
                   ),
                 ],
               ),
@@ -187,7 +151,4 @@ class _RunProgressPageState extends State<RunProgressPage> {
       ),
     );
   }
-
-  bool _isListening() => !(_positionStreamSubscription == null ||
-      _positionStreamSubscription.isPaused);
 }
