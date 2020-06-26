@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 
 import '../widgets/placeholder_widget.dart';
 import '../widgets/run_progress_card.dart';
+import '../stopwatch_service.dart';
 
 class RunProgressPage extends StatefulWidget {
   static const String routeName = 'run_progress_page';
@@ -19,41 +20,18 @@ class _RunProgressPageState extends State<RunProgressPage> {
   double _totalDistance = 0.0;
   Position _prev;
 
+  String _timeToDisplay = "00h 00m 00s";
   double _avgSpeed = 0.0;
 
-  Stopwatch _stopwatch = Stopwatch();
-  String _timeToDisplay = "00h 00m 00s";
-  final duration = const Duration(seconds: 1);
+  StopwatchService stopwatchService;
 
-  void keepRunning() {
-    if (_stopwatch.isRunning) {
-      startTimer();
-    }
+  void stopwatchCallback(
+      {String hours, String minutes, String seconds, int totalSeconds}) {
     setState(() {
-      _timeToDisplay = _stopwatch.elapsed.inHours.toString().padLeft(2, '0') +
-          'h ' +
-          (_stopwatch.elapsed.inMinutes % 60).toString().padLeft(2, '0') +
-          'm ' +
-          (_stopwatch.elapsed.inSeconds % 60).toString().padLeft(2, '0') +
-          's ';
-      _avgSpeed = _totalDistance * 1000 / _stopwatch.elapsed.inSeconds;
+      _timeToDisplay = '${hours}h ${minutes}m ${seconds}s';
+      _avgSpeed = _totalDistance * 1000 / totalSeconds;
     });
   }
-
-  void startTimer() {
-    Timer(duration, keepRunning);
-  }
-
-  void startStopwatch() {
-    _stopwatch.start();
-    startTimer();
-  }
-
-  void pauseStopwatch() {
-    _stopwatch.stop();
-  }
-
-  void stopStopwatch() {}
 
   Future<void> _getDistance(Position prev, Position cur) async {
     Geolocator()
@@ -87,12 +65,20 @@ class _RunProgressPageState extends State<RunProgressPage> {
     setState(() {
       if (_positionStreamSubscription.isPaused) {
         _positionStreamSubscription.resume();
-        startStopwatch();
+        stopwatchService.startStopwatch();
       } else {
         _positionStreamSubscription.pause();
-        pauseStopwatch();
+        stopwatchService.pauseStopwatch();
       }
     });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    stopwatchService =
+        StopwatchService(timeToDisplayCallback: stopwatchCallback);
   }
 
   @override
@@ -159,39 +145,40 @@ class _RunProgressPageState extends State<RunProgressPage> {
                     ),
                   ),
                   Expanded(
-                      child: _isListening()
-                          ? Row(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: <Widget>[
-                                Expanded(
-                                  child: GestureDetector(
-                                      child: RunProgressCard(
-                                        cardText: 'PAUSE',
-                                        backgroundColor: Colors.yellow,
-                                        textColor: Colors.black,
-                                      ),
-                                      onTap: _toggleListening),
-                                ),
-                                Expanded(
-                                  child: GestureDetector(
+                    child: _isListening()
+                        ? Row(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Expanded(
+                                child: GestureDetector(
                                     child: RunProgressCard(
-                                      cardText: 'STOP',
-                                      backgroundColor: Colors.red,
+                                      cardText: 'PAUSE',
+                                      backgroundColor: Colors.yellow,
                                       textColor: Colors.black,
                                     ),
-                                    onLongPress: _toggleListening,
-                                  ),
-                                )
-                              ],
-                            )
-                          : GestureDetector(
-                              child: RunProgressCard(
-                                cardText: 'START',
-                                backgroundColor: Colors.green,
-                                textColor: Colors.black,
+                                    onTap: _toggleListening),
                               ),
-                              onTap: _toggleListening)),
+                              Expanded(
+                                child: GestureDetector(
+                                  child: RunProgressCard(
+                                    cardText: 'STOP',
+                                    backgroundColor: Colors.red,
+                                    textColor: Colors.black,
+                                  ),
+                                  onLongPress: _toggleListening,
+                                ),
+                              )
+                            ],
+                          )
+                        : GestureDetector(
+                            child: RunProgressCard(
+                              cardText: 'START',
+                              backgroundColor: Colors.green,
+                              textColor: Colors.black,
+                            ),
+                            onTap: _toggleListening),
+                  ),
                 ],
               ),
             ),

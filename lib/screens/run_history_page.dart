@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jogzilla/screens/run_config_page.dart';
+import 'package:jogzilla/screens/run_progress_page.dart';
 
 import '../models/run_data.dart';
 import '../widgets/run_history_tile.dart';
@@ -61,7 +62,8 @@ class RunHistoryPage extends StatelessWidget {
       ),
       drawer: NavigationDrawer(),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.pushNamed(context, RunConfigPage.routeName),
+        onPressed: () =>
+            Navigator.pushNamed(context, RunProgressPage.routeName),
         label: Text('Start New Run'),
         backgroundColor: Theme.of(context).primaryColor,
       ),
