@@ -115,3 +115,4 @@ app.*.symbols
 
 #API Key
 **/lib/api_key.dart
+android/app/src/main/AndroidManifest.xml
