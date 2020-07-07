@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 
+import '../models/run_data.dart';
 import '../services/location_service.dart';
 import '../services/stopwatch_service.dart';
 import '../widgets/placeholder_widget.dart';
@@ -22,6 +23,7 @@ class _RunProgressPageState extends State<RunProgressPage> {
   double _totalDistance = 0.0;
   bool _listening = false;
 
+  int _totalSeconds;
   String _timeToDisplay = "00h 00m 00s";
   double _avgSpeed = 0.0;
 
@@ -43,6 +45,7 @@ class _RunProgressPageState extends State<RunProgressPage> {
       _timeToDisplay = timeString;
       _avgSpeed = _totalDistance * 1000 / totalSeconds;
     });
+    _totalSeconds = totalSeconds;
   }
 
   void _locationServiceCallback(
@@ -62,6 +65,12 @@ class _RunProgressPageState extends State<RunProgressPage> {
   void _toggle() {
     locationService.toggleListening();
     stopwatchService.toggleStopwatch();
+  }
+
+  RunData get _completeRun {
+    return RunData(
+      positions: _positions,
+    );
   }
 
   @override
@@ -210,7 +219,10 @@ class _RunProgressPageState extends State<RunProgressPage> {
                                     ),
                                   ),
                                 ),
-                                onTap: () => print('stop'),
+                                onTap: () {
+                                  _completeRun;
+                                  print('Push to run overview');
+                                },
                               ),
                             ),
                           ],

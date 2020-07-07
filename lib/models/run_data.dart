@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:geolocator/geolocator.dart';
 
 class RunData {
   final String distance;
@@ -6,11 +7,13 @@ class RunData {
   final String dateTime;
   final String pace;
   final String description;
+  final List<Position> positions;
 
   RunData(
-      {@required this.dateTime,
-      @required this.duration,
-      @required this.distance,
-      @required this.pace,
+      {this.dateTime,
+      this.duration,
+      this.distance,
+      this.pace,
+      this.positions,
       this.description});
 }
