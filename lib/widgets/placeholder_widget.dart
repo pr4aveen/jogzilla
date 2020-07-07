@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
 class PlaceholderWidget extends StatelessWidget {
-  const PlaceholderWidget(this.title, this.message);
+  const PlaceholderWidget(
+      {@required this.title, @required this.message, this.reversed = false});
 
   final String title;
   final String message;
+  final bool reversed;
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +16,14 @@ class PlaceholderWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Text(title,
-              style: const TextStyle(fontSize: 32.0),
+              style: reversed
+                  ? const TextStyle(fontSize: 16.0)
+                  : const TextStyle(fontSize: 32.0),
               textAlign: TextAlign.center),
           Text(message,
-              style: const TextStyle(fontSize: 16.0),
+              style: reversed
+                  ? const TextStyle(fontSize: 32.0)
+                  : const TextStyle(fontSize: 16.0),
               textAlign: TextAlign.center),
         ],
       ),

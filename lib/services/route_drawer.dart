@@ -1,13 +1,15 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
+
 import 'package:mapbox_gl/mapbox_gl.dart';
 
 class RouteDrawer {
-  MapboxMapController mapboxMapController;
+  static void drawRoute(
+      {@required List<LatLng> route,
+      @required MapboxMapController controller}) {
+    controller.clearLines();
+    controller.clearCircles();
 
-  RouteDrawer({this.mapboxMapController});
-
-  void drawRoute(List<LatLng> route) {
-    mapboxMapController.addLine(
+    controller.addLine(
       LineOptions(
         geometry: route,
         lineWidth: 7,
@@ -16,7 +18,7 @@ class RouteDrawer {
       ),
     );
 
-    mapboxMapController.addCircle(CircleOptions(
+    controller.addCircle(CircleOptions(
       circleRadius: 5,
       geometry: route.elementAt(0),
       circleColor: '#ff0000',

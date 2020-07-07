@@ -27,23 +27,13 @@ class RunHistoryTile extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(
-                          data.description,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline6
-                              .copyWith(color: Colors.white),
-                        ),
+                        Text(data.description,
+                            style: Theme.of(context).textTheme.headline6),
                         SizedBox(
                           height: 2.0,
                         ),
-                        Text(
-                          data.dateTime,
-                          style: Theme.of(context)
-                              .textTheme
-                              .caption
-                              .copyWith(color: Colors.white),
-                        ),
+                        Text(data.dateTime,
+                            style: Theme.of(context).textTheme.caption),
                         SizedBox(height: 15.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -102,10 +92,7 @@ class RunDataItem extends StatelessWidget {
         ),
         Text(
           value,
-          style: Theme.of(context)
-              .textTheme
-              .headline6
-              .copyWith(color: Colors.white),
+          style: Theme.of(context).textTheme.headline6,
         ),
       ],
     );

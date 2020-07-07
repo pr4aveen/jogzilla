@@ -83,8 +83,10 @@ class _RunProgressPageState extends State<RunProgressPage> {
           }
 
           if (snapshot.data == GeolocationStatus.denied) {
-            return const PlaceholderWidget('Location services disabled',
-                'Enable location services for this App using the device settings.');
+            return const PlaceholderWidget(
+                title: 'Location services disabled',
+                message:
+                    'Enable location services for this App using the device settings.');
           }
 
           return SafeArea(

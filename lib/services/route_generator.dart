@@ -27,9 +27,7 @@ class RouteGenerator {
   }
 
   List<LatLng> _generateWaypoints(LatLng start, double distance) {
-    LatLng point1;
-    LatLng point2;
-    LatLng point3;
+    LatLng point1, point2, point3;
     Random rng = Random();
 
     double bearing = rng.nextDouble() * 2 * pi;

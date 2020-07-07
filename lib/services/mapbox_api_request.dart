@@ -45,17 +45,12 @@ class MapboxApiRequest {
   static String accessToken = API_KEY;
 
   static Future<http.Response> _queryResponse(LatLng start, LatLng end) {
-    return http.get('https://api.mapbox.com/directions/v5/mapbox/walking/' +
-        start.longitude.toString() +
-        ',' +
-        start.latitude.toString() +
-        ';' +
-        end.longitude.toString() +
-        ',' +
-        end.latitude.toString() +
-        '?' +
-        'geometries=geojson&access_token=' +
-        accessToken);
+    return http.get('https://api.mapbox.com/directions/v5/mapbox/walking/'
+        '${start.longitude.toString()},'
+        '${start.latitude.toString()};'
+        '${end.longitude.toString()},'
+        '${end.latitude.toString()}?'
+        'geometries=geojson&access_token=$accessToken');
   }
 
   static Future<RouteResponse> _fetchResponse(LatLng start, LatLng end) async {
@@ -63,7 +58,8 @@ class MapboxApiRequest {
     if (response.statusCode == 200) {
       return RouteResponse.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to load');
+      throw Exception(
+          'MapBox API request failed. Status: ${response.statusCode}');
     }
   }
 
