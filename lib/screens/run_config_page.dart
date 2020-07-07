@@ -20,10 +20,6 @@ class _RunConfigPageState extends State<RunConfigPage> {
   bool generated = false;
   double actualDistance = 0.0;
 
-  void _onMapCreated(MapboxMapController controller) {
-    mapController = controller;
-  }
-
   void _addRoute() async {
     RouteGenerator routeGenerator =
         RouteGenerator(start: start, generateDistance: generateDistance);
@@ -50,7 +46,7 @@ class _RunConfigPageState extends State<RunConfigPage> {
             children: <Widget>[
               Container(
                 child: MapboxMap(
-                  onMapCreated: _onMapCreated,
+                  onMapCreated: (controller) => mapController = controller,
                   initialCameraPosition:
                       CameraPosition(target: start, zoom: 14),
                   rotateGesturesEnabled: false,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/run_data.dart';
 import '../screens/detailed_run_history_page.dart';
+import './run_data_item.dart';
 
 class RunHistoryTile extends StatelessWidget {
   final RunData data;
@@ -69,32 +70,6 @@ class RunHistoryTile extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class RunDataItem extends StatelessWidget {
-  final String label;
-  final String value;
-
-  RunDataItem({@required this.label, @required this.value});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: <Widget>[
-        Text(
-          label,
-          style: Theme.of(context)
-              .textTheme
-              .caption
-              .copyWith(color: Colors.grey.shade500),
-        ),
-        Text(
-          value,
-          style: Theme.of(context).textTheme.headline6,
-        ),
-      ],
     );
   }
 }
