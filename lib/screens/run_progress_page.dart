@@ -22,7 +22,6 @@ class _RunProgressPageState extends State<RunProgressPage> {
   final List<Position> _positions = [];
   double _totalDistance = 0.0;
   bool _listening = false;
-
   int _totalSeconds;
   String _timeToDisplay = "00h 00m 00s";
   double _avgSpeed = 0.0;
@@ -54,6 +53,17 @@ class _RunProgressPageState extends State<RunProgressPage> {
       setState(() {
         _totalDistance += distance / 1000;
       });
+      mapController.addLine(
+        LineOptions(
+          geometry: [
+            LatLng(_positions.last.latitude, _positions.last.longitude),
+            LatLng(position.latitude, position.longitude),
+          ],
+          lineWidth: 7,
+          lineOpacity: 0.5,
+          lineColor: '#0000ff',
+        ),
+      );
       _positions.add(position);
     } else {
       setState(() {
@@ -68,9 +78,7 @@ class _RunProgressPageState extends State<RunProgressPage> {
   }
 
   RunData get _completeRun {
-    return RunData(
-      positions: _positions,
-    );
+    return RunData();
   }
 
   @override
@@ -119,13 +127,17 @@ class _RunProgressPageState extends State<RunProgressPage> {
               children: <Widget>[
                 Container(
                   child: MapboxMap(
+                    myLocationEnabled: true,
+                    myLocationTrackingMode: MyLocationTrackingMode.Tracking,
+                    styleString: MapboxStyles.LIGHT,
                     onMapCreated: (controller) => mapController = controller,
-                    initialCameraPosition: CameraPosition(
-                        target: LatLng(1.2839, 103.8607), zoom: 14),
+                    initialCameraPosition:
+                        CameraPosition(target: LatLng(0, 0), zoom: 17),
                     rotateGesturesEnabled: false,
                     tiltGesturesEnabled: false,
                     zoomGesturesEnabled: false,
                     scrollGesturesEnabled: false,
+                    myLocationRenderMode: MyLocationRenderMode.NORMAL,
                   ),
                   width: screenWidth,
                   height: screenHeight,
