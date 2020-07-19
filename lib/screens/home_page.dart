@@ -1,11 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:jogzilla/widgets/navigation_drawer.dart';
+
+import '../models/run_data.dart';
+import '../widgets/navigation_drawer.dart';
+import '../widgets/recent_run_tile.dart';
 
 class HomePage extends StatelessWidget {
   static const String routeName = 'home_page';
 
-  final List runs = [1, 2, 3, 4, 5, 6];
+  final List<RunData> runs = [
+    RunData(
+      dateTime: 'June 11, 2020 at 10:15 AM',
+      distance: '5.00',
+      pace: '5:00 min/km',
+      duration: '25m 00s',
+      description: 'Morning Run',
+    ),
+    RunData(
+      dateTime: 'June 9, 2020 at 9:06 AM',
+      distance: '2.40',
+      pace: '14.04 /km',
+      duration: '10m 00s',
+      description: 'IPPT training',
+    ),
+    RunData(
+      dateTime: 'June 8, 2020 at 10:03 PM',
+      distance: '3.00',
+      pace: '12.00 /km',
+      duration: '15m 00s',
+      description: 'Late night jog',
+    ),
+    RunData(
+      dateTime: 'June 4, 2020 at 6:06 AM',
+      distance: '21.1',
+      pace: '9.80 /km',
+      duration: '2h 15m 03s',
+      description: 'Half Marathon',
+    ),
+    RunData(
+      dateTime: 'June 1, 2020 at 9:06 AM',
+      distance: '2.4',
+      pace: '14.04 /km',
+      duration: '10m 00s',
+      description: 'IPPT training',
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -88,21 +127,10 @@ class HomePage extends StatelessWidget {
                     scrollDirection: Axis.horizontal,
                     itemCount: runs.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: EdgeInsets.only(right: width * 0.03),
-                        child: ItemCard(
-                          width: width * 0.35,
-                          height: height * 0.2,
-                          child: Container(
-                            margin: EdgeInsets.only(bottom: 50),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(runs[index].toString() + 'km'),
-                              ],
-                            ),
-                          ),
-                        ),
+                      return RecentRunTile(
+                        width: width,
+                        height: height,
+                        runData: runs[index],
                       );
                     },
                   ),
