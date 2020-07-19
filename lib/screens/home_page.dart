@@ -24,8 +24,12 @@ class HomePage extends StatelessWidget {
           Stack(
             alignment: Alignment.bottomCenter,
             children: <Widget>[
-              Header(
-                height: height,
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.lightBlueAccent,
+                ),
+                margin: EdgeInsets.only(bottom: height * 0.1, top: 0),
+                height: height * 0.15,
               ),
               ItemCard(
                 height: height * 0.2,
@@ -134,28 +138,6 @@ class ItemCard extends StatelessWidget {
       child: child,
       height: height,
       width: width,
-    );
-  }
-}
-
-class Header extends StatelessWidget {
-  const Header({
-    Key key,
-    @required this.height,
-  }) : super(key: key);
-
-  final double height;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.centerLeft,
-      decoration: BoxDecoration(
-        color: Colors.lightBlueAccent,
-      ),
-      margin: EdgeInsets.only(bottom: height * 0.1, top: 0),
-      height: height * 0.15,
-      width: double.infinity,
     );
   }
 }
