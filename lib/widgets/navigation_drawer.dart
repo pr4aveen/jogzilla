@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
 import '../screens/run_config_page.dart';
+import '../screens/run_history_page.dart';
+import '../screens/run_progress_page.dart';
 
 class NavigationDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
-        color: Theme.of(context).backgroundColor,
+        color: Color(0xff191f39),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
@@ -20,7 +22,10 @@ class NavigationDrawer extends StatelessWidget {
             ),
             Text(
               'User Name',
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6
+                  .copyWith(color: Colors.white),
             ),
             Padding(
               padding:
@@ -32,9 +37,19 @@ class NavigationDrawer extends StatelessWidget {
               icon: Icons.person,
             ),
             NavigationDrawerItem(
-              title: 'New Run',
+              title: 'Start New Run',
               icon: Icons.directions_run,
+              targetDestination: RunProgressPage.routeName,
+            ),
+            NavigationDrawerItem(
+              title: 'Generate Route',
+              icon: Icons.all_inclusive,
               targetDestination: RunConfigPage.routeName,
+            ),
+            NavigationDrawerItem(
+              title: 'View Run History',
+              icon: Icons.history,
+              targetDestination: RunHistoryPage.routeName,
             ),
             NavigationDrawerItem(
               title: 'Settings',
@@ -58,10 +73,16 @@ class NavigationDrawerItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      leading: Icon(icon),
+      leading: Icon(
+        icon,
+        color: Colors.white,
+      ),
       title: Text(
         title,
-        style: TextStyle(fontSize: 18.0),
+        style: TextStyle(
+          fontSize: 18.0,
+          color: Colors.white,
+        ),
       ),
       onTap: () {
         Navigator.pop(context);

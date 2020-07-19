@@ -20,11 +20,13 @@ class MyApp extends StatelessWidget {
       title: 'Jogzilla',
       theme: ThemeData(
         accentColor: greyAccent,
-        appBarTheme: AppBarTheme(elevation: 0.0, color: redAccent),
+        appBarTheme: AppBarTheme(
+          elevation: 0.0,
+          color: Colors.lightBlueAccent,
+        ),
         backgroundColor: blackBackground,
-        brightness: Brightness.dark,
         primaryColor: redAccent,
-        scaffoldBackgroundColor: blackBackground,
+        scaffoldBackgroundColor: Colors.grey[200],
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
     );
