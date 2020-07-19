@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:jogzilla/screens/run_config_page.dart';
+import 'package:jogzilla/services/database_storage.dart';
 
-import './run_progress_page.dart';
 import '../models/run_data.dart';
 import '../widgets/navigation_drawer.dart';
 import '../widgets/run_history_tile.dart';
 
 class RunHistoryPage extends StatelessWidget {
   static const String routeName = 'run_history_page';
+  final DatabaseStorage storage = DatabaseStorage.instance;
+
   final List<RunData> sampleData = [
     RunData(
       dateTime: 'June 11, 2020 at 10:15 AM',
@@ -67,32 +69,41 @@ class RunHistoryPage extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverToBoxAdapter(
-            // placeholder until statistics widget is ready
-            child: Container(
-              color: Theme.of(context).primaryColor,
-              height: 350,
-              child: Center(
-                child: Text(
-                  'SUMMARY STATISTICS',
-                  style: TextStyle(fontSize: 32),
+      body: FutureBuilder(
+        future: storage.queryAllRuns(),
+        builder: (BuildContext context, AsyncSnapshot<List<RunData>> snapshot) {
+          if (snapshot.hasData) {
+            return CustomScrollView(
+              slivers: <Widget>[
+                SliverToBoxAdapter(
+                  // placeholder until statistics widget is ready
+                  child: Container(
+                    color: Theme.of(context).primaryColor,
+                    height: 350,
+                    child: Center(
+                      child: Text(
+                        'SUMMARY STATISTICS',
+                        style: TextStyle(fontSize: 32),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) {
-                return RunHistoryTile(
-                  data: sampleData[index],
-                );
-              },
-              childCount: sampleData.length,
-            ),
-          ),
-        ],
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return RunHistoryTile(
+                        data: snapshot.data[index],
+                      );
+                    },
+                    childCount: snapshot.data.length,
+                  ),
+                ),
+              ],
+            );
+          } else {
+            return const Center(child: CircularProgressIndicator());
+          }
+        },
       ),
     );
   }
