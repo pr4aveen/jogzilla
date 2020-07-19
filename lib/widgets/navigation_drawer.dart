@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../screens/home_page.dart';
 import '../screens/run_config_page.dart';
 import '../screens/run_history_page.dart';
 import '../screens/run_progress_page.dart';
@@ -31,6 +32,11 @@ class NavigationDrawer extends StatelessWidget {
               padding:
                   const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
               child: Divider(color: Colors.grey[300]),
+            ),
+            NavigationDrawerItem(
+              title: 'Home',
+              icon: Icons.home,
+              targetDestination: HomePage.routeName,
             ),
             NavigationDrawerItem(
               title: 'My Profile',
