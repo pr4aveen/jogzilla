@@ -25,12 +25,6 @@ class RunHistoryPage extends StatelessWidget {
         ],
       ),
       drawer: NavigationDrawer(),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => Navigator.pushNamed(context, RunConfigPage.routeName),
-        label: Text('Start New Run'),
-        backgroundColor: Theme.of(context).primaryColor,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: FutureBuilder(
         future: storage.queryAllRuns(),
         builder: (BuildContext context, AsyncSnapshot<List<RunData>> snapshot) {
@@ -40,12 +34,15 @@ class RunHistoryPage extends StatelessWidget {
                 SliverToBoxAdapter(
                   // placeholder until statistics widget is ready
                   child: Container(
-                    color: Theme.of(context).primaryColor,
+                    color: Colors.blueAccent,
                     height: 350,
                     child: Center(
                       child: Text(
                         'SUMMARY STATISTICS',
-                        style: TextStyle(fontSize: 32),
+                        style: TextStyle(
+                          fontSize: 32,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),

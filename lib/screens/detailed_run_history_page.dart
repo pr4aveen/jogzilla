@@ -12,7 +12,7 @@ class DetailedRunHistoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(runData.description),
+        title: Text(runData.title),
       ),
     );
   }

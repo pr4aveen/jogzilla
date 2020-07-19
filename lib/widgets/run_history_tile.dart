@@ -16,9 +16,17 @@ class RunHistoryTile extends StatelessWidget {
             .pushNamed(DetailedRunHistoryPage.routeName, arguments: data);
       },
       child: Padding(
-        padding: const EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-        child: Container(
-          color: Colors.grey[850],
+        padding: const EdgeInsets.only(
+          top: 10.0,
+          left: 15.0,
+          right: 15.0,
+          bottom: 0.0,
+        ),
+        child: Card(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25.0),
+          ),
+          color: Colors.white,
           child: Column(
             children: <Widget>[
               Padding(
@@ -28,7 +36,7 @@ class RunHistoryTile extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        Text(data.description,
+                        Text(data.title,
                             style: Theme.of(context).textTheme.headline6),
                         SizedBox(
                           height: 2.0,
@@ -45,7 +53,7 @@ class RunHistoryTile extends StatelessWidget {
                             ),
                             Container(
                               height: 35,
-                              child: VerticalDivider(color: Colors.grey[300]),
+                              child: VerticalDivider(color: Colors.grey[850]),
                             ),
                             RunDataItem(
                               label: 'Pace',
@@ -53,7 +61,7 @@ class RunHistoryTile extends StatelessWidget {
                             ),
                             Container(
                               height: 35,
-                              child: VerticalDivider(color: Colors.grey[300]),
+                              child: VerticalDivider(color: Colors.grey[850]),
                             ),
                             RunDataItem(
                               label: 'Time',
