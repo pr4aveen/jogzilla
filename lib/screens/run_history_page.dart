@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jogzilla/screens/run_config_page.dart';
-import 'package:jogzilla/services/database_storage.dart';
 
 import '../models/run_data.dart';
+import '../screens/run_config_page.dart';
+import '../services/database_storage.dart';
 import '../widgets/navigation_drawer.dart';
 import '../widgets/run_history_tile.dart';
 
