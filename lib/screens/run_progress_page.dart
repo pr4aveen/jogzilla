@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:jogzilla/screens/save_run_page.dart';
+import 'package:jogzilla/services/database_storage.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 
 import '../models/run_data.dart';
@@ -31,6 +33,8 @@ class _RunProgressPageState extends State<RunProgressPage> {
   LocationService locationService;
 
   MapboxMapController mapController;
+
+  final DatabaseStorage storage = DatabaseStorage.instance;
 
   void _stopwatchCallback(
       {String hours, String minutes, String seconds, int totalSeconds}) {
@@ -67,10 +71,25 @@ class _RunProgressPageState extends State<RunProgressPage> {
     stopwatchService.toggleStopwatch();
   }
 
-  RunData get _completeRun {
-    return RunData(
-      positions: _positions,
+  Future<RunData> get _completeRun async {
+    int runId = await storage.queryRowCount() + 1;
+    List<LatLng> positions = List<LatLng>.from(
+        _positions.map((pos) => LatLng(pos.latitude, pos.longitude)));
+    String distance = _totalDistance.toString();
+    String duration = _totalSeconds.toString();
+    String dateTime = DateTime.now().toString();
+    String pace = _avgSpeed.toString();
+
+    RunData runData = RunData(
+      runId: runId,
+      dateTime: dateTime,
+      duration: duration,
+      distance: distance,
+      pace: pace,
+      positions: positions,
     );
+
+    return runData;
   }
 
   @override
@@ -219,8 +238,11 @@ class _RunProgressPageState extends State<RunProgressPage> {
                                     ),
                                   ),
                                 ),
-                                onTap: () {
+                                onTap: () async {
                                   _completeRun;
+                                  Navigator.of(context).pushNamed(
+                                      SaveRunPage.routeName,
+                                      arguments: await _completeRun);
                                   print('Push to run overview');
                                 },
                               ),

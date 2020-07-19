@@ -1,43 +1,53 @@
+import 'dart:convert';
+
 import 'package:mapbox_gl/mapbox_gl.dart';
 
-class RunDataList {
-  List<RunData> runs;
-
-  RunDataList() {
-    runs = new List();
-  }
-
-  toJSONEncodable() {
-    return runs.map((runData) => runData.toJSONEncodable()).toList();
-  }
-}
-
 class RunData {
+  final int runId;
+  final String dateTime;
   final String distance;
   final String duration;
-  final String dateTime;
   final String pace;
-  final String description;
   final List<LatLng> positions;
+  String title;
+  String description;
 
-  RunData(
-      {this.dateTime,
-      this.duration,
-      this.distance,
-      this.pace,
-      this.positions,
-      this.description});
+  RunData({
+    this.runId,
+    this.dateTime,
+    this.distance,
+    this.duration,
+    this.pace,
+    this.positions,
+    this.title,
+    this.description,
+  });
 
-  toJSONEncodable() {
-    Map<String, dynamic> map = Map();
+  Map<String, dynamic> toMap() {
+    return {
+      'runId': runId,
+      'dateTime': dateTime,
+      'distance': distance,
+      'duration': duration,
+      'pace': pace,
+      'positions': jsonEncode(positions),
+      'title': title,
+      'description': description,
+    };
+  }
 
-    map['distance'] = distance;
-    map['duration'] = duration;
-    map['dateTime'] = dateTime;
-    map['pace'] = pace;
-    map['description'] = description;
-    map['positions'] = positions;
-
-    return map;
+  factory RunData.fromMap(Map<String, dynamic> json) {
+    print(json['positions']);
+    return new RunData(
+      runId: json['runID'],
+      dateTime: json['dateTime'].toString(),
+      distance: json['distance'].toString(),
+      duration: json['duration'].toString(),
+      pace: json['pace'].toString(),
+      positions: List<LatLng>.from(
+          jsonDecode(json['positions']).map((pos) => LatLng(pos[0], pos[1]))),
+      title: json['title'],
+      description: json['description'],
+    );
   }
 }
