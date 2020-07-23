@@ -9,6 +9,23 @@ class RouteDrawer {
     controller.clearLines();
     controller.clearCircles();
 
+    double _centerLatitude = 0;
+    double _centerLongitude = 0;
+
+    for (int i = 0; i < route.length; i++) {
+      _centerLatitude += route[i].latitude;
+      _centerLongitude += route[i].longitude;
+    }
+
+    _centerLatitude /= route.length;
+    _centerLongitude /= route.length;
+
+    LatLng newCenter = LatLng(_centerLatitude, _centerLongitude);
+    CameraUpdate cameraUpdate = CameraUpdate.newLatLngZoom(newCenter, 14);
+    controller.moveCamera(cameraUpdate);
+
+    print(route.length);
+
     controller.addLine(
       LineOptions(
         geometry: route,

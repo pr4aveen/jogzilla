@@ -28,6 +28,12 @@ class _RunConfigPageState extends State<RunConfigPage> {
     _start = _setCurrentLocation();
   }
 
+  @override
+  void dispose() {
+    mapController.dispose();
+    super.dispose();
+  }
+
   Future<LatLng> _setCurrentLocation() async {
     Position pos = await Geolocator().getCurrentPosition();
     return LatLng(pos.latitude, pos.longitude);
@@ -65,49 +71,56 @@ class _RunConfigPageState extends State<RunConfigPage> {
           } else {
             return Column(
               children: [
-                _isGenerating
-                    ? Container(
-                        alignment: Alignment.center,
-                        child: CircularProgressIndicator(),
-                        width: MediaQuery.of(context).size.width,
-                        height: MediaQuery.of(context).size.height * 0.60,
-                      )
-                    : Stack(
-                        children: <Widget>[
-                          Container(
-                            child: MapboxMap(
-                              onMapCreated: (controller) =>
-                                  mapController = controller,
-                              initialCameraPosition: CameraPosition(
-                                  target: snapshot.data, zoom: 14),
-                              rotateGesturesEnabled: false,
-                              tiltGesturesEnabled: false,
+                Stack(
+                  children: <Widget>[
+                    Container(
+                      child: MapboxMap(
+                        myLocationEnabled: true,
+                        myLocationTrackingMode: MyLocationTrackingMode.Tracking,
+                        styleString: MapboxStyles.LIGHT,
+                        onMapCreated: (controller) =>
+                            mapController = controller,
+                        initialCameraPosition:
+                            CameraPosition(target: snapshot.data, zoom: 14),
+                        rotateGesturesEnabled: false,
+                        tiltGesturesEnabled: false,
+                        zoomGesturesEnabled: false,
+                        scrollGesturesEnabled: false,
+                        myLocationRenderMode: MyLocationRenderMode.NORMAL,
+                      ),
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height * 0.60,
+                    ),
+                    Positioned.fill(
+                      child: Align(
+                        alignment: Alignment.bottomRight,
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: 5.0, right: 5.0),
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).accentColor,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          padding: EdgeInsets.all(8),
+                          child: Text(
+                            'Route distance: ${_actualDistance.toStringAsFixed(1)} km',
+                            style: TextStyle(
+                              fontSize: 16,
                             ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    _isGenerating
+                        ? Container(
+                            color: Theme.of(context).scaffoldBackgroundColor,
+                            alignment: Alignment.center,
+                            child: CircularProgressIndicator(),
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.height * 0.60,
-                          ),
-                          Positioned.fill(
-                            child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: Container(
-                                margin:
-                                    EdgeInsets.only(bottom: 5.0, right: 5.0),
-                                decoration: BoxDecoration(
-                                    color: Theme.of(context).accentColor,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20))),
-                                padding: EdgeInsets.all(8),
-                                child: Text(
-                                  'Route distance: ${_actualDistance.toStringAsFixed(1)} km',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-                            ),
                           )
-                        ],
-                      ),
+                        : Container(),
+                  ],
+                ),
                 SizedBox(
                   height: 10,
                 ),
