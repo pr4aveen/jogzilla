@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../models/run_data.dart';
-import '../screens/run_config_page.dart';
 import '../services/database_storage.dart';
 import '../widgets/navigation_drawer.dart';
 import '../widgets/run_history_tile.dart';
@@ -34,7 +33,7 @@ class RunHistoryPage extends StatelessWidget {
                 SliverToBoxAdapter(
                   // placeholder until statistics widget is ready
                   child: Container(
-                    color: Colors.blueAccent,
+                    color: Colors.lightBlueAccent,
                     height: 350,
                     child: Center(
                       child: Text(

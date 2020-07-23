@@ -61,31 +61,18 @@ class _SaveRunPageState extends State<SaveRunPage> {
             ),
             RunSummary(
               runData: widget.runData,
-            ),
-            TextField(
-              autofocus: true,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Run Title',
-              ),
-              onChanged: (text) => runTitle = text,
-            ),
-            TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Description',
-              ),
-              onChanged: (text) => runDescription = text,
-            ),
-            RaisedButton(
-              child: Text('Save Run'),
-              onPressed: () {
+              onSave: () {
                 _saveRunData();
-                Navigator.of(context).pushNamed(RunHistoryPage.routeName);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    RunHistoryPage.routeName, (_) => false);
                 print(runTitle);
                 print(runDescription);
               },
-            )
+              onDelete: () => Navigator.of(context).pushNamedAndRemoveUntil(
+                  RunHistoryPage.routeName, (_) => false),
+              modifyTitle: (text) => runTitle = text,
+              modifyDescription: (text) => runDescription = text,
+            ),
           ],
         ),
       ),

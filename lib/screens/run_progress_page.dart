@@ -24,7 +24,7 @@ class _RunProgressPageState extends State<RunProgressPage> {
   final List<Position> _positions = [];
   double _totalDistance = 0.0;
   bool _listening = false;
-  int _totalSeconds;
+  int _totalSeconds = 0;
   String _timeToDisplay = "00h 00m 00s";
   double _avgSpeed = 0.0;
 

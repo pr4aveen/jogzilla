@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import '../models/run_data.dart';
 import '../services/database_storage.dart';
 import '../widgets/navigation_drawer.dart';
+import '../widgets/overview_item.dart';
 import '../widgets/recent_run_tile.dart';
 
 class HomePage extends StatelessWidget {
@@ -143,40 +144,6 @@ class HomePageBody extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class OverviewItem extends StatelessWidget {
-  const OverviewItem({@required this.title, @required this.subtitle});
-
-  final String title;
-  final String subtitle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Text(
-            title,
-            style: const TextStyle(
-                fontSize: 32.0,
-                color: Colors.black,
-                fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-          Text(
-            subtitle,
-            style: const TextStyle(
-                fontSize: 16.0,
-                color: Colors.grey,
-                fontWeight: FontWeight.bold),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
     );
   }
 }
