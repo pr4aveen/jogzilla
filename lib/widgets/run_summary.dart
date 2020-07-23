@@ -19,6 +19,9 @@ class RunSummary extends StatelessWidget {
   final Function modifyDescription;
 
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -96,36 +99,58 @@ class RunSummary extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            GestureDetector(
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.06,
-                width: MediaQuery.of(context).size.width * 0.8,
-                alignment: Alignment.center,
-                child: Text('Save Run'),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.lightGreen[300]),
-              ),
+            CustomRoundedButton(
+              height: height * 0.06,
+              width: width * 0.8,
               onTap: onSave,
+              title: 'Save Run',
+              color: Colors.lightGreen[300],
             ),
             SizedBox(
               height: 10,
             ),
-            GestureDetector(
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.05,
-                width: MediaQuery.of(context).size.width * 0.4,
-                alignment: Alignment.center,
-                child: Text('Delete Run'),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.red[300]),
-              ),
+            CustomRoundedButton(
+              height: height * 0.05,
+              width: width * 0.4,
               onTap: onDelete,
+              title: 'Delete Run',
+              color: Colors.red[300],
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class CustomRoundedButton extends StatelessWidget {
+  const CustomRoundedButton(
+      {Key key,
+      @required this.height,
+      @required this.width,
+      @required this.onTap,
+      @required this.title,
+      @required this.color})
+      : super(key: key);
+
+  final double height;
+  final double width;
+  final Function onTap;
+  final String title;
+  final Color color;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      child: Container(
+        height: height,
+        width: width,
+        alignment: Alignment.center,
+        child: Text(title),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20), color: color),
+      ),
+      onTap: onTap,
     );
   }
 }
