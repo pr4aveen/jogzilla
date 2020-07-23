@@ -82,4 +82,9 @@ class DatabaseStorage {
   //   return await db
   //       .delete(table, where: '$columnRunId = ?', whereArgs: [id]);
   // }
+
+  Future<int> clear() async {
+    Database db = await instance.database;
+    return await db.delete(table);
+  }
 }
