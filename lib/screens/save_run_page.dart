@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:jogzilla/screens/run_history_page.dart';
-import 'package:jogzilla/services/database_storage.dart';
-import 'package:jogzilla/services/route_drawer.dart';
-import 'package:jogzilla/widgets/run_summary.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 
 import '../models/run_data.dart';
+import '../screens/run_history_page.dart';
+import '../services/database_storage.dart';
+import '../services/route_drawer.dart';
+import '../widgets/run_summary.dart';
 
 class SaveRunPage extends StatefulWidget {
   static const String routeName = 'SaveRunPage';
@@ -18,16 +18,16 @@ class SaveRunPage extends StatefulWidget {
 }
 
 class _SaveRunPageState extends State<SaveRunPage> {
-  String runTitle;
-  String runDescription;
+  String _runTitle;
+  String _runDescription;
   MapboxMapController mapController;
 
-  final DatabaseStorage storage = DatabaseStorage.instance;
+  final DatabaseStorage _storage = DatabaseStorage.instance;
 
   void _saveRunData() {
-    widget.runData.title = runTitle == null ? '' : runTitle;
-    widget.runData.description = runDescription == null ? '' : runDescription;
-    storage.insert(widget.runData);
+    widget.runData.title = _runTitle == null ? '' : _runTitle;
+    widget.runData.description = _runDescription == null ? '' : _runDescription;
+    _storage.insert(widget.runData);
   }
 
   @override
@@ -65,13 +65,11 @@ class _SaveRunPageState extends State<SaveRunPage> {
                 _saveRunData();
                 Navigator.of(context).pushNamedAndRemoveUntil(
                     RunHistoryPage.routeName, (_) => false);
-                print(runTitle);
-                print(runDescription);
               },
               onDelete: () => Navigator.of(context).pushNamedAndRemoveUntil(
                   RunHistoryPage.routeName, (_) => false),
-              modifyTitle: (text) => runTitle = text,
-              modifyDescription: (text) => runDescription = text,
+              modifyTitle: (text) => _runTitle = text,
+              modifyDescription: (text) => _runDescription = text,
             ),
           ],
         ),

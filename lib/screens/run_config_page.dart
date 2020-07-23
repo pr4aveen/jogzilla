@@ -128,8 +128,8 @@ class _RunConfigPageState extends State<RunConfigPage> {
               RaisedButton(
                 child: Text('Run'),
                 onPressed: generated
-                    ? () =>
-                        Navigator.pushNamed(context, RunProgressPage.routeName)
+                    ? () => Navigator.pushNamedAndRemoveUntil(
+                        context, RunProgressPage.routeName, (_) => false)
                     : null,
                 color: Theme.of(context).primaryColor,
               ),

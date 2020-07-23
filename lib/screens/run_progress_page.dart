@@ -254,10 +254,11 @@ class _RunProgressPageState extends State<RunProgressPage> {
                                 ),
                                 onTap: () async {
                                   _completeRun;
-                                  Navigator.of(context).pushNamed(
-                                      SaveRunPage.routeName,
-                                      arguments: await _completeRun);
-                                  print('Push to run overview');
+                                  Navigator.of(context).pushNamedAndRemoveUntil(
+                                    SaveRunPage.routeName,
+                                    (_) => false,
+                                    arguments: await _completeRun,
+                                  );
                                 },
                               ),
                             ),
