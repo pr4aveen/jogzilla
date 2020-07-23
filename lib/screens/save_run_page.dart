@@ -24,6 +24,12 @@ class _SaveRunPageState extends State<SaveRunPage> {
 
   final DatabaseStorage _storage = DatabaseStorage.instance;
 
+  @override
+  void dispose() {
+    mapController.dispose();
+    super.dispose();
+  }
+
   void _saveRunData() {
     widget.runData.title = _runTitle == null ? '' : _runTitle;
     widget.runData.description = _runDescription == null ? '' : _runDescription;

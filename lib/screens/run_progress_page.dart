@@ -114,6 +114,7 @@ class _RunProgressPageState extends State<RunProgressPage> {
   @override
   void dispose() {
     locationService.dispose();
+    mapController.dispose();
     super.dispose();
   }
 
