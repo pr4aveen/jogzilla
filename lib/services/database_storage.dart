@@ -16,6 +16,7 @@ class DatabaseStorage {
   static final String columnDistance = 'distance';
   static final String columnDuration = 'duration';
   static final String columnPace = 'pace';
+  static final String columnCalories = 'calories';
   static final String columnPositions = 'positions';
   static final String columnTitle = 'title';
   static final String columnDescription = 'description';
@@ -44,6 +45,7 @@ class DatabaseStorage {
         "$columnDistance REAL,"
         "$columnDuration REAL,"
         "$columnPace REAL,"
+        "$columnCalories REAL,"
         "$columnPositions TEXT,"
         "$columnTitle TEXT,"
         "$columnDescription TEXT"

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jogzilla/models/run_data.dart';
+import 'package:jogzilla/services/calories_calculator.dart';
 import 'package:jogzilla/widgets/overview_item.dart';
 
 class RunSummary extends StatelessWidget {
@@ -72,6 +73,8 @@ class RunSummary extends StatelessWidget {
                     title: runData.duration, subtitle: 'DURATION', bold: false),
                 OverviewItem(
                     title: runData.pace, subtitle: 'PACE', bold: false),
+                OverviewItem(
+                    title: runData.calories, subtitle: 'CALORIES', bold: false),
               ],
             ),
             SizedBox(

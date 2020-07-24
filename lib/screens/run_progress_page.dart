@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:jogzilla/screens/save_run_page.dart';
+import 'package:jogzilla/services/calories_calculator.dart';
 import 'package:jogzilla/services/database_storage.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 
@@ -89,6 +90,7 @@ class _RunProgressPageState extends State<RunProgressPage> {
     String duration = _totalSeconds.toString();
     String dateTime = DateTime.now().toString();
     String pace = _avgSpeed.toString();
+    String calories = CaloriesCalculator().calculate(_totalDistance).toString();
 
     RunData runData = RunData(
       runId: runId,
@@ -96,6 +98,7 @@ class _RunProgressPageState extends State<RunProgressPage> {
       duration: duration,
       distance: distance,
       pace: pace,
+      calories: calories,
       positions: positions,
     );
 
