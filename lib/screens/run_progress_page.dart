@@ -88,6 +88,7 @@ class _RunProgressPageState extends State<RunProgressPage> {
   }
 
   Future<RunData> get _completeRun async {
+    locationService.stop();
     stopwatchService.stop();
     setState(() {
       _stopped = true;
@@ -124,10 +125,10 @@ class _RunProgressPageState extends State<RunProgressPage> {
   void dispose() {
     locationService.dispose();
     stopwatchService.dispose();
-    mapController.dispose();
+    // mapController.dispose();
     locationService = null;
     stopwatchService = null;
-    mapController = null;
+    // mapController = null;
     super.dispose();
   }
 

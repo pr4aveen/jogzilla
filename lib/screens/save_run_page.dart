@@ -28,6 +28,7 @@ class _SaveRunPageState extends State<SaveRunPage> {
   @override
   void dispose() {
     mapController.dispose();
+    mapController = null;
     super.dispose();
   }
 
@@ -64,16 +65,20 @@ class _SaveRunPageState extends State<SaveRunPage> {
           children: <Widget>[
             Container(
               child: MapboxMap(
-                onMapCreated: (controller) => mapController = controller,
-                onStyleLoadedCallback: () {
+                onMapCreated: (controller) {
+                  mapController = controller;
+                  print('map loaded');
                   if (widget.runData.positions.isNotEmpty) {
                     RouteDrawer.drawRoute(
                         route: widget.runData.positions,
                         controller: mapController);
                   }
                 },
+                onStyleLoadedCallback: () {
+                  print('style loaded');
+                },
                 initialCameraPosition:
-                    CameraPosition(target: LatLng(0, 0), zoom: 14),
+                    CameraPosition(target: LatLng(0, 0), zoom: 8),
                 styleString: MapboxStyles.LIGHT,
                 rotateGesturesEnabled: false,
                 tiltGesturesEnabled: false,

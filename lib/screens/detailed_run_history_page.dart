@@ -5,29 +5,36 @@ import '../models/run_data.dart';
 import '../services/route_drawer.dart';
 import '../widgets/run_summary_header.dart';
 
-class DetailedRunHistoryPage extends StatelessWidget {
+class DetailedRunHistoryPage extends StatefulWidget {
   static const String routeName = 'detailed_run_history_page';
   final RunData runData;
-
   DetailedRunHistoryPage({@required this.runData});
 
+  @override
+  _DetailedRunHistoryPageState createState() => _DetailedRunHistoryPageState();
+}
+
+class _DetailedRunHistoryPageState extends State<DetailedRunHistoryPage> {
+  MapboxMapController mapController;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(runData.title),
+        title: Text(widget.runData.title),
       ),
       body: SafeArea(
         child: ListView(
           children: <Widget>[
             Container(
               child: MapboxMap(
-                onMapCreated: (controller) {
-                  RouteDrawer.drawRoute(
-                      route: runData.positions, controller: controller);
-                },
+                onMapCreated: (controller) => mapController = controller,
                 initialCameraPosition:
                     CameraPosition(target: LatLng(0, 0), zoom: 14),
+                onStyleLoadedCallback: () {
+                  RouteDrawer.drawRoute(
+                      route: widget.runData.positions,
+                      controller: mapController);
+                },
                 styleString: MapboxStyles.LIGHT,
                 rotateGesturesEnabled: false,
                 tiltGesturesEnabled: false,
@@ -36,7 +43,7 @@ class DetailedRunHistoryPage extends StatelessWidget {
               height: MediaQuery.of(context).size.height * 0.65,
             ),
             RunSummaryHeader(
-              runData: runData,
+              runData: widget.runData,
             ),
             SizedBox(
               height: 20,

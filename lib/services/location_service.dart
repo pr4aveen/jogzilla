@@ -45,7 +45,7 @@ class LocationService {
   }
 
   void stop() {
-    _positionStreamSubscription.pause();
+    _positionStreamSubscription.cancel();
     locationServiceCallback(listening: false);
   }
 

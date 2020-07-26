@@ -92,25 +92,6 @@ class _RunConfigPageState extends State<RunConfigPage> {
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.60,
                     ),
-                    Positioned.fill(
-                      child: Align(
-                        alignment: Alignment.bottomRight,
-                        child: Container(
-                          margin: EdgeInsets.only(bottom: 5.0, right: 5.0),
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).accentColor,
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          padding: EdgeInsets.all(8),
-                          child: Text(
-                            'Route distance: ${_actualDistance.toStringAsFixed(1)} km',
-                            style: TextStyle(
-                              fontSize: 16,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
                     _isGenerating
                         ? Container(
                             color: Theme.of(context).scaffoldBackgroundColor,
