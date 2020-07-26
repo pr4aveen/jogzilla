@@ -53,6 +53,5 @@ class StopwatchService {
       _stopwatch.start();
       _startTimer();
     }
-    print('toggled');
   }
 }

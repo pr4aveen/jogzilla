@@ -79,7 +79,6 @@ class RouteGenerator {
   Future<List<LatLng>> generateRoute(double threshold) async {
     Future<List<LatLng>> tempRoute = _generate();
     double tempDist = await tempRoute.then((route) => _routeDistance(route));
-    print(tempDist);
     if (tempDist < generateDistance * (1 - threshold) ||
         tempDist > generateDistance * (1 + threshold)) {
       return generateRoute(threshold * 1.01);

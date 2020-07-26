@@ -40,7 +40,6 @@ class RunData {
   }
 
   factory RunData.fromMap(Map<String, dynamic> json) {
-    print(json['positions']);
     return new RunData(
       runId: json['runID'],
       dateTime: DateTime.parse(json['dateTime']),

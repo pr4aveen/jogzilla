@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:intl/intl.dart';
 
 import '../models/run_data.dart';
 import '../screens/run_history_page.dart';
@@ -31,9 +32,23 @@ class _SaveRunPageState extends State<SaveRunPage> {
   }
 
   void _saveRunData() {
-    widget.runData.title = _runTitle == null ? '' : _runTitle;
+    widget.runData.title = _runTitle == null ? _defaultTitle : _runTitle;
     widget.runData.description = _runDescription == null ? '' : _runDescription;
     _storage.insert(widget.runData);
+  }
+
+  String get _defaultTitle {
+    DateTime dateTime = DateTime.now();
+    String day = DateFormat("E").format(dateTime);
+    int hour = int.parse(DateFormat("H").format(dateTime));
+
+    if (hour < 12) {
+      return '$day Morning Run';
+    } else if (hour < 18) {
+      return '$day Afternoon Run';
+    } else {
+      return '$day Evening Run';
+    }
   }
 
   @override
@@ -53,11 +68,8 @@ class _SaveRunPageState extends State<SaveRunPage> {
                   RouteDrawer.drawRoute(
                       route: widget.runData.positions, controller: controller);
                 },
-                initialCameraPosition: CameraPosition(
-                    target: widget.runData.positions.isEmpty
-                        ? LatLng(1.2839, 103.8607)
-                        : widget.runData.positions[0],
-                    zoom: 14),
+                initialCameraPosition:
+                    CameraPosition(target: LatLng(0, 0), zoom: 14),
                 styleString: MapboxStyles.LIGHT,
                 rotateGesturesEnabled: false,
                 tiltGesturesEnabled: false,

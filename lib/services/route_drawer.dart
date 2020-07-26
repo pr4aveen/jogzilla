@@ -24,8 +24,6 @@ class RouteDrawer {
     CameraUpdate cameraUpdate = CameraUpdate.newLatLngZoom(newCenter, 14);
     controller.moveCamera(cameraUpdate);
 
-    print(route.length);
-
     controller.addLine(
       LineOptions(
         geometry: route,

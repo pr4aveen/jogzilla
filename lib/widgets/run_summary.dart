@@ -90,7 +90,7 @@ class RunSummary extends StatelessWidget {
               decoration: InputDecoration(
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
-                labelText: 'Run Title',
+                labelText: 'Run Title (optional)',
               ),
               onChanged: modifyTitle,
             ),
@@ -101,7 +101,7 @@ class RunSummary extends StatelessWidget {
               decoration: InputDecoration(
                 border:
                     OutlineInputBorder(borderRadius: BorderRadius.circular(25)),
-                labelText: 'Description',
+                labelText: 'Description (optional)',
               ),
               onChanged: modifyDescription,
             ),
