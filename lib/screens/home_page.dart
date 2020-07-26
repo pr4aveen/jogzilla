@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:jogzilla/widgets/past_week_runs.dart';
 
 import '../models/run_data.dart';
 import '../services/database_storage.dart';
@@ -112,7 +113,7 @@ class HomePageBody extends StatelessWidget {
                 height: height * 0.25,
                 width: width * 0.85,
                 decoration: cardDecoration,
-                child: Center(child: Text('Stats')),
+                child: Center(child: PastWeekRuns(now: DateTime.now())),
               ),
               Container(
                 width: width * 0.85,

@@ -89,4 +89,25 @@ class DatabaseStorage {
     Database db = await instance.database;
     return await db.delete(table);
   }
+
+  Future<List<RunData>> getPastWeekRuns(DateTime now) async {
+    List<RunData> runs = [];
+    Database db = await instance.database;
+    int count = await queryRowCount();
+    DateTime today = DateTime(now.year, now.month, now.day);
+
+    while (count > 0) {
+      var response =
+          await db.query(table, where: '$columnRunId = ?', whereArgs: [count]);
+      RunData temp = RunData.fromMap(response[0]);
+      if (today.difference(DateTime.parse(temp.dateTime)).inDays < 5) {
+        runs.add(temp);
+      } else {
+        return runs;
+      }
+      count--;
+    }
+
+    return runs;
+  }
 }
