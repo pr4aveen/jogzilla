@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:jogzilla/screens/save_run_page.dart';
-import 'package:jogzilla/services/calories_calculator.dart';
-import 'package:jogzilla/services/database_storage.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 
 import '../models/run_data.dart';
+import '../screens/save_run_page.dart';
+import '../services/calories_calculator.dart';
+import '../services/database_storage.dart';
 import '../services/location_service.dart';
 import '../services/stopwatch_service.dart';
 import '../widgets/placeholder_widget.dart';
@@ -54,21 +54,24 @@ class _RunProgressPageState extends State<RunProgressPage> {
 
   void _locationServiceCallback(
       {double distance, Position position, bool listening}) {
+    assert(mapController != null);
     if (distance != null && position != null) {
       setState(() {
         _totalDistance += distance / 1000;
       });
-      mapController.addLine(
-        LineOptions(
-          geometry: [
-            LatLng(_positions.last.latitude, _positions.last.longitude),
-            LatLng(position.latitude, position.longitude),
-          ],
-          lineWidth: 7,
-          lineOpacity: 0.5,
-          lineColor: '#0000ff',
-        ),
-      );
+      if (_positions.length > 1) {
+        mapController.addLine(
+          LineOptions(
+            geometry: [
+              LatLng(_positions.last.latitude, _positions.last.longitude),
+              LatLng(position.latitude, position.longitude),
+            ],
+            lineWidth: 7,
+            lineOpacity: 1.0,
+            lineColor: '#000000',
+          ),
+        );
+      }
       _positions.add(position);
     } else {
       setState(() {
