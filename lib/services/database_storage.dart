@@ -43,7 +43,7 @@ class DatabaseStorage {
         "$columnRunId INTEGER PRIMARY KEY,"
         "$columnDateTime TEXT,"
         "$columnDistance REAL,"
-        "$columnDuration REAL,"
+        "$columnDuration INTEGER,"
         "$columnPace REAL,"
         "$columnCalories REAL,"
         "$columnPositions TEXT,"
