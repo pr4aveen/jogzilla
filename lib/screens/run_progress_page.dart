@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:jogzilla/services/route_drawer.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 
 import '../models/run_data.dart';
@@ -123,10 +124,10 @@ class _RunProgressPageState extends State<RunProgressPage> {
   void dispose() {
     locationService.dispose();
     stopwatchService.dispose();
-    mapController.dispose();
+    // mapController.dispose();
     locationService = null;
     stopwatchService = null;
-    mapController = null;
+    // mapController = null;
     super.dispose();
   }
 
@@ -167,8 +168,16 @@ class _RunProgressPageState extends State<RunProgressPage> {
                           myLocationTrackingMode:
                               MyLocationTrackingMode.Tracking,
                           styleString: MapboxStyles.LIGHT,
-                          onMapCreated: (controller) =>
-                              mapController = controller,
+                          onMapCreated: (controller) {
+                            mapController = controller;
+                            print('route ' + widget.route.toString());
+                            if (widget.route.isNotEmpty) {
+                              RouteDrawer.drawRoute(
+                                  route: widget.route,
+                                  controller: controller,
+                                  opacity: 0.5);
+                            }
+                          },
                           initialCameraPosition:
                               CameraPosition(target: LatLng(0, 0), zoom: 17),
                           rotateGesturesEnabled: false,

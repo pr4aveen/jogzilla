@@ -21,6 +21,7 @@ class _RunConfigPageState extends State<RunConfigPage> {
   bool _generated = false;
   double _actualDistance = 0.0;
   bool _isGenerating = false;
+  List<LatLng> route = [];
 
   @override
   void initState() {
@@ -46,7 +47,7 @@ class _RunConfigPageState extends State<RunConfigPage> {
     RouteGenerator routeGenerator = RouteGenerator(
         start: await _start, generateDistance: _generateDistance);
 
-    List<LatLng> route = await routeGenerator.generateRoute(0.1);
+    route = await routeGenerator.generateRoute(0.1);
     _generated = true;
     RouteDrawer.drawRoute(controller: mapController, route: route);
     setState(() {
@@ -174,8 +175,14 @@ class _RunConfigPageState extends State<RunConfigPage> {
                     RaisedButton(
                       child: Text('Run'),
                       onPressed: _generated
-                          ? () => Navigator.pushNamedAndRemoveUntil(
-                              context, RunProgressPage.routeName, (_) => false)
+                          ? () {
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                RunProgressPage.routeName,
+                                (_) => false,
+                                arguments: route,
+                              );
+                            }
                           : null,
                       color: Theme.of(context).primaryColor,
                     ),

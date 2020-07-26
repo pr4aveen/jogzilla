@@ -31,7 +31,9 @@ class RouteGenerator {
         );
       case RunProgressPage.routeName:
         return MaterialPageRoute(
-          builder: (_) => RunProgressPage(),
+          builder: (_) => RunProgressPage(
+            route: args,
+          ),
         );
       case RunHistoryPage.routeName:
         return MaterialPageRoute(

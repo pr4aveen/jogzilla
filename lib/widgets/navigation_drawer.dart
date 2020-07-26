@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mapbox_gl/mapbox_gl.dart';
 
 import '../screens/home_page.dart';
 import '../screens/run_config_page.dart';
@@ -47,7 +48,7 @@ class NavigationDrawer extends StatelessWidget {
               icon: Icons.directions_run,
               targetDestination: RunProgressPage.routeName,
               pushAndRemoveUntil: true,
-              arguments: {'route': const []},
+              arguments: <LatLng>[],
             ),
             NavigationDrawerItem(
               title: 'Generate Route',

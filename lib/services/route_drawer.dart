@@ -5,7 +5,9 @@ import 'package:mapbox_gl/mapbox_gl.dart';
 class RouteDrawer {
   static void drawRoute(
       {@required List<LatLng> route,
-      @required MapboxMapController controller}) {
+      @required MapboxMapController controller,
+      double opacity}) {
+    assert(controller != null, 'assertion');
     controller.clearLines();
     controller.clearCircles();
 
@@ -28,7 +30,7 @@ class RouteDrawer {
       LineOptions(
         geometry: route,
         lineWidth: 7,
-        lineOpacity: 1.0,
+        lineOpacity: opacity == null ? 1.0 : opacity,
         lineColor: '#000000',
       ),
     );
