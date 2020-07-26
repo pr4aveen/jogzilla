@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jogzilla/widgets/all_runs_summary_chart.dart';
 
 import '../models/run_data.dart';
 import '../services/database_storage.dart';
@@ -14,14 +15,6 @@ class RunHistoryPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Run History'),
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Icon(
-              Icons.add,
-            ),
-          ),
-        ],
       ),
       drawer: NavigationDrawer(),
       body: FutureBuilder(
@@ -32,19 +25,7 @@ class RunHistoryPage extends StatelessWidget {
               slivers: <Widget>[
                 SliverToBoxAdapter(
                   // placeholder until statistics widget is ready
-                  child: Container(
-                    color: Colors.lightBlueAccent,
-                    height: 350,
-                    child: Center(
-                      child: Text(
-                        'SUMMARY STATISTICS',
-                        style: TextStyle(
-                          fontSize: 32,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
+                  child: AllRunsSummarryChart(allRuns: snapshot.data),
                 ),
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
