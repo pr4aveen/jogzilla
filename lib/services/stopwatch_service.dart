@@ -4,10 +4,19 @@ import 'package:flutter/material.dart';
 
 class StopwatchService {
   Stopwatch _stopwatch = Stopwatch();
+  Timer _timer;
   final _duration = const Duration(seconds: 1);
   Function timeToDisplayCallback;
+  bool disposed = false;
 
   StopwatchService({@required this.timeToDisplayCallback});
+
+  void dispose() {
+    _timer?.cancel();
+    _timer = null;
+    _stopwatch.stop();
+    disposed = true;
+  }
 
   void _keepRunning() {
     if (_stopwatch.isRunning) {
@@ -20,15 +29,21 @@ class StopwatchService {
     String seconds =
         (_stopwatch.elapsed.inSeconds % 60).toString().padLeft(2, '0');
 
-    timeToDisplayCallback(
-        hours: hours,
-        minutes: minutes,
-        seconds: seconds,
-        totalSeconds: _stopwatch.elapsed.inSeconds);
+    if (!disposed) {
+      timeToDisplayCallback(
+          hours: hours,
+          minutes: minutes,
+          seconds: seconds,
+          totalSeconds: _stopwatch.elapsed.inSeconds);
+    }
   }
 
   void _startTimer() {
-    Timer(_duration, _keepRunning);
+    _timer = Timer(_duration, _keepRunning);
+  }
+
+  void stop() {
+    _stopwatch.stop();
   }
 
   void toggleStopwatch() {
@@ -38,5 +53,6 @@ class StopwatchService {
       _stopwatch.start();
       _startTimer();
     }
+    print('toggled');
   }
 }

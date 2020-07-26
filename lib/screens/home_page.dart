@@ -126,17 +126,16 @@ class HomePageBody extends StatelessWidget {
               Container(
                 height: height * 0.20,
                 child: ListView.builder(
-                  reverse: true,
                   scrollDirection: Axis.horizontal,
                   itemCount: runs.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
-                      padding: EdgeInsets.only(
-                          left: index == runs.length - 1 ? width * 0.075 : 0),
+                      padding:
+                          EdgeInsets.only(left: index == 0 ? width * 0.075 : 0),
                       child: RecentRunTile(
                         width: width,
                         height: height,
-                        runData: runs[index],
+                        runData: runs[runs.length - 1 - index],
                       ),
                     );
                   },
