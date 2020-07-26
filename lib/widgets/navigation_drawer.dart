@@ -47,6 +47,7 @@ class NavigationDrawer extends StatelessWidget {
               icon: Icons.directions_run,
               targetDestination: RunProgressPage.routeName,
               pushAndRemoveUntil: true,
+              arguments: {'route': const []},
             ),
             NavigationDrawerItem(
               title: 'Generate Route',
@@ -74,12 +75,15 @@ class NavigationDrawerItem extends StatelessWidget {
   final IconData icon;
   final String targetDestination;
   final bool pushAndRemoveUntil;
+  final Object arguments;
 
-  NavigationDrawerItem(
-      {@required this.title,
-      @required this.icon,
-      this.targetDestination,
-      this.pushAndRemoveUntil = false});
+  NavigationDrawerItem({
+    @required this.title,
+    @required this.icon,
+    this.targetDestination,
+    this.arguments,
+    this.pushAndRemoveUntil = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +103,11 @@ class NavigationDrawerItem extends StatelessWidget {
         Navigator.pop(context);
         if (pushAndRemoveUntil) {
           Navigator.pushNamedAndRemoveUntil(
-              context, targetDestination, (_) => false);
+            context,
+            targetDestination,
+            (_) => false,
+            arguments: arguments,
+          );
         } else {
           Navigator.pushNamed(context, targetDestination);
         }
