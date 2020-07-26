@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:jogzilla/widgets/run_summary_header.dart';
 
 import '../models/run_data.dart';
-import '../widgets/overview_item.dart';
+import '../widgets/run_summary_header.dart';
 
 class RunSummary extends StatelessWidget {
   final RunData runData;
@@ -31,57 +32,8 @@ class RunSummary extends StatelessWidget {
         padding: EdgeInsets.all(15.0),
         child: Column(
           children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(20),
-              child: Text(
-                'RUN SUMMARY',
-                style: const TextStyle(
-                    fontSize: 21,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-            Divider(
-              color: Colors.grey[850],
-              height: 0,
-              thickness: 1,
-              indent: 0,
-              endIndent: 0,
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: 40,
-              ),
-              child: Text(
-                runData.distance.toString() + ' km',
-                style: const TextStyle(
-                  fontSize: 60,
-                ),
-              ),
-            ),
-            Text(
-              'DISTANCE',
-              style: const TextStyle(fontSize: 15),
-            ),
-            SizedBox(
-              height: 40,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: <Widget>[
-                OverviewItem(
-                    title: runData.duration.toString(),
-                    subtitle: 'DURATION',
-                    bold: false),
-                OverviewItem(
-                    title: runData.pace.toString(),
-                    subtitle: 'PACE',
-                    bold: false),
-                OverviewItem(
-                    title: runData.calories.toString(),
-                    subtitle: 'CALORIES',
-                    bold: false),
-              ],
+            RunSummaryHeader(
+              runData: runData,
             ),
             SizedBox(
               height: 20,
