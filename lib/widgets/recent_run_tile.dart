@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../models/run_data.dart';
 import '../screens/detailed_run_history_page.dart';
@@ -17,6 +18,10 @@ class RecentRunTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime dateTime = DateTime.parse(runData.dateTime);
+    String date = DateFormat('MMM dd').format(dateTime);
+    String time = DateFormat('jm').format(dateTime);
+
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
@@ -46,13 +51,13 @@ class RecentRunTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'Jan 31',
+                    date,
                     style: TextStyle(
                       fontSize: 13,
                     ),
                   ),
                   Text(
-                    '6:20 pm',
+                    time,
                     style: TextStyle(
                       fontSize: 13,
                     ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../models/run_data.dart';
 import '../screens/detailed_run_history_page.dart';
@@ -10,6 +11,9 @@ class RunHistoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    DateTime dateTime = DateTime.parse(data.dateTime);
+    String dateString = DateFormat('dd MMM yyyy h:mm a').format(dateTime);
+
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
@@ -41,7 +45,7 @@ class RunHistoryTile extends StatelessWidget {
                         SizedBox(
                           height: 2.0,
                         ),
-                        Text(data.dateTime,
+                        Text(dateString,
                             style: Theme.of(context).textTheme.caption),
                         SizedBox(height: 15.0),
                         Row(
