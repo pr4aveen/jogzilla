@@ -73,8 +73,8 @@ class HomePageBody extends StatelessWidget {
       avgPace += runs[i].pace;
     }
     avgPace /= runs.length;
-    return "${avgPace.toString().split('.')[0]}' " +
-        "${avgPace.toString().split('.')[1].substring(0, 2)}\"";
+    var splitValue = avgPace.toStringAsFixed(2).split('.');
+    return "${splitValue[0]}' ${splitValue[1]}\"";
   }
 
   @override
