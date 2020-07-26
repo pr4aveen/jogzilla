@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:jogzilla/widgets/past_week_runs.dart';
 
 import '../models/run_data.dart';
 import '../services/database_storage.dart';
 import '../widgets/navigation_drawer.dart';
 import '../widgets/overview_item.dart';
+import '../widgets/past_week_runs.dart';
 import '../widgets/recent_run_tile.dart';
 
 class HomePage extends StatelessWidget {
@@ -56,6 +56,27 @@ class HomePageBody extends StatelessWidget {
     borderRadius: BorderRadius.circular(25),
   );
 
+  String _totalDistance() {
+    double totalDistance = 0;
+    for (int i = 0; i < runs.length; i++) {
+      totalDistance += runs[i].distance;
+    }
+    return totalDistance.toString() + ' km';
+  }
+
+  String _avgPace() {
+    if (runs.length == 0) {
+      return "0' 00\"";
+    }
+    double avgPace = 0;
+    for (int i = 0; i < runs.length; i++) {
+      avgPace += runs[i].pace;
+    }
+    avgPace /= runs.length;
+    return "${avgPace.toString().split('.')[0]}' " +
+        "${avgPace.toString().split('.')[1].substring(0, 2)}\"";
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -79,7 +100,7 @@ class HomePageBody extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: <Widget>[
                   OverviewItem(
-                    title: '32 km',
+                    title: _totalDistance(),
                     subtitle: 'TOTAL DISTANCE',
                   ),
                   VerticalDivider(
@@ -89,7 +110,7 @@ class HomePageBody extends StatelessWidget {
                     thickness: 1,
                   ),
                   OverviewItem(
-                    title: "9' 06\"",
+                    title: _avgPace(),
                     subtitle: 'AVERAGE PACE',
                   ),
                 ],
@@ -113,6 +134,7 @@ class HomePageBody extends StatelessWidget {
                 height: height * 0.25,
                 width: width * 0.85,
                 decoration: cardDecoration,
+                padding: EdgeInsets.only(top: height * 0.02),
                 child: Center(child: PastWeekRuns(now: DateTime.now())),
               ),
               Container(

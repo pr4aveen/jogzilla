@@ -39,7 +39,7 @@ class _SaveRunPageState extends State<SaveRunPage> {
 
   String get _defaultTitle {
     DateTime dateTime = DateTime.now();
-    String day = DateFormat("E").format(dateTime);
+    String day = DateFormat("EEEE").format(dateTime);
     int hour = int.parse(DateFormat("H").format(dateTime));
 
     if (hour < 12) {
