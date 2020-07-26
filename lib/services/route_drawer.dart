@@ -30,8 +30,8 @@ class RouteDrawer {
       LineOptions(
         geometry: route,
         lineWidth: 7,
-        lineOpacity: 0.5,
-        lineColor: '#0000ff',
+        lineOpacity: 1.0,
+        lineColor: '#000000',
       ),
     );
 
