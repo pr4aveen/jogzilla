@@ -6,7 +6,7 @@ import '../models/run_data.dart';
 class RunSummaryHeader extends StatelessWidget {
   final RunData runData;
 
-  RunSummaryHeader({this.runData});
+  RunSummaryHeader({@required this.runData});
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +20,17 @@ class RunSummaryHeader extends StatelessWidget {
                 fontSize: 21, color: Colors.black, fontWeight: FontWeight.bold),
           ),
         ),
+        if (runData.description != null)
+          Padding(
+            padding: EdgeInsets.only(left: 50, right: 50, bottom: 20),
+            child: Text(
+              runData.description,
+              style: const TextStyle(
+                  fontSize: 16,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold),
+            ),
+          ),
         Divider(
           color: Colors.grey[850],
           height: 0,
@@ -29,7 +40,7 @@ class RunSummaryHeader extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.only(
-            top: 40,
+            top: 20,
           ),
           child: Text(
             runData.distance.toString() + ' km',
