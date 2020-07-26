@@ -64,11 +64,13 @@ class _SaveRunPageState extends State<SaveRunPage> {
           children: <Widget>[
             Container(
               child: MapboxMap(
-                onMapCreated: (controller) {
-                  if (widget.runData.positions.isNotEmpty)
+                onMapCreated: (controller) => mapController = controller,
+                onStyleLoadedCallback: () {
+                  if (widget.runData.positions.isNotEmpty) {
                     RouteDrawer.drawRoute(
                         route: widget.runData.positions,
-                        controller: controller);
+                        controller: mapController);
+                  }
                 },
                 initialCameraPosition:
                     CameraPosition(target: LatLng(0, 0), zoom: 14),

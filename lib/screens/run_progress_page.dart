@@ -124,10 +124,10 @@ class _RunProgressPageState extends State<RunProgressPage> {
   void dispose() {
     locationService.dispose();
     stopwatchService.dispose();
-    // mapController.dispose();
+    mapController.dispose();
     locationService = null;
     stopwatchService = null;
-    // mapController = null;
+    mapController = null;
     super.dispose();
   }
 
@@ -168,13 +168,13 @@ class _RunProgressPageState extends State<RunProgressPage> {
                           myLocationTrackingMode:
                               MyLocationTrackingMode.Tracking,
                           styleString: MapboxStyles.LIGHT,
-                          onMapCreated: (controller) {
-                            mapController = controller;
-                            print('route ' + widget.route.toString());
+                          onMapCreated: (controller) =>
+                              mapController = controller,
+                          onStyleLoadedCallback: () {
                             if (widget.route.isNotEmpty) {
                               RouteDrawer.drawRoute(
                                   route: widget.route,
-                                  controller: controller,
+                                  controller: mapController,
                                   opacity: 0.5);
                             }
                           },
