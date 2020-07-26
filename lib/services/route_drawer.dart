@@ -7,6 +7,7 @@ class RouteDrawer {
       {@required List<LatLng> route,
       @required MapboxMapController controller,
       double opacity}) {
+    print('route ' + route.toString());
     assert(controller != null, 'assertion');
     controller.clearLines();
     controller.clearCircles();

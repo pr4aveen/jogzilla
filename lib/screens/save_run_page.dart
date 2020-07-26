@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jogzilla/services/my_mapbox_map.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:intl/intl.dart';
 
@@ -54,6 +55,8 @@ class _SaveRunPageState extends State<SaveRunPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (widget.runData.positions.isNotEmpty)
+      MyMapboxMap.instance.draw(widget.runData.positions);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -64,25 +67,26 @@ class _SaveRunPageState extends State<SaveRunPage> {
         child: ListView(
           children: <Widget>[
             Container(
-              child: MapboxMap(
-                onMapCreated: (controller) {
-                  mapController = controller;
-                  print('map loaded');
-                  if (widget.runData.positions.isNotEmpty) {
-                    RouteDrawer.drawRoute(
-                        route: widget.runData.positions,
-                        controller: mapController);
-                  }
-                },
-                onStyleLoadedCallback: () {
-                  print('style loaded');
-                },
-                initialCameraPosition:
-                    CameraPosition(target: LatLng(0, 0), zoom: 8),
-                styleString: MapboxStyles.LIGHT,
-                rotateGesturesEnabled: false,
-                tiltGesturesEnabled: false,
-              ),
+              // child: MapboxMap(
+              //   onMapCreated: (controller) {
+              //     mapController = controller;
+              //     print('map loaded');
+              //     if (widget.runData.positions.isNotEmpty) {
+              //       RouteDrawer.drawRoute(
+              //           route: widget.runData.positions,
+              //           controller: mapController);
+              //     }
+              //   },
+              //   onStyleLoadedCallback: () {
+              //     print('style loaded');
+              //   },
+              //   initialCameraPosition:
+              //       CameraPosition(target: LatLng(0, 0), zoom: 8),
+              //   styleString: MapboxStyles.LIGHT,
+              //   rotateGesturesEnabled: false,
+              //   tiltGesturesEnabled: false,
+              // ),
+              child: MyMapboxMap.instance.map,
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.65,
             ),

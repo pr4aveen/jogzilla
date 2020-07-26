@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jogzilla/services/my_mapbox_map.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -31,7 +32,7 @@ class _RunConfigPageState extends State<RunConfigPage> {
 
   @override
   void dispose() {
-    mapController.dispose();
+    // mapController.dispose();
     super.dispose();
   }
 
@@ -49,7 +50,8 @@ class _RunConfigPageState extends State<RunConfigPage> {
 
     route = await routeGenerator.generateRoute(0.1);
     _generated = true;
-    RouteDrawer.drawRoute(controller: mapController, route: route);
+    // RouteDrawer.drawRoute(controller: mapController, route: route);
+    MyMapboxMap.instance.draw(route);
     setState(() {
       _actualDistance = routeGenerator.actualDistance;
       _isGenerating = false;
@@ -75,20 +77,21 @@ class _RunConfigPageState extends State<RunConfigPage> {
                 Stack(
                   children: <Widget>[
                     Container(
-                      child: MapboxMap(
-                        myLocationEnabled: true,
-                        myLocationTrackingMode: MyLocationTrackingMode.Tracking,
-                        styleString: MapboxStyles.LIGHT,
-                        onMapCreated: (controller) =>
-                            mapController = controller,
-                        initialCameraPosition:
-                            CameraPosition(target: snapshot.data, zoom: 14),
-                        rotateGesturesEnabled: false,
-                        tiltGesturesEnabled: false,
-                        zoomGesturesEnabled: false,
-                        scrollGesturesEnabled: false,
-                        myLocationRenderMode: MyLocationRenderMode.NORMAL,
-                      ),
+                      // child: MapboxMap(
+                      //   myLocationEnabled: true,
+                      //   myLocationTrackingMode: MyLocationTrackingMode.Tracking,
+                      //   styleString: MapboxStyles.LIGHT,
+                      //   onMapCreated: (controller) =>
+                      //       mapController = controller,
+                      //   initialCameraPosition:
+                      //       CameraPosition(target: snapshot.data, zoom: 14),
+                      //   rotateGesturesEnabled: false,
+                      //   tiltGesturesEnabled: false,
+                      //   zoomGesturesEnabled: false,
+                      //   scrollGesturesEnabled: false,
+                      //   myLocationRenderMode: MyLocationRenderMode.NORMAL,
+                      // ),
+                      child: MyMapboxMap.instance.map,
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.60,
                     ),

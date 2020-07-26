@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:jogzilla/services/my_mapbox_map.dart';
 import 'package:jogzilla/services/route_drawer.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 
@@ -109,6 +110,7 @@ class _RunProgressPageState extends State<RunProgressPage> {
       positions: positions,
     );
 
+    print('run completed ' + positions.toString());
     return runData;
   }
 
@@ -158,35 +160,38 @@ class _RunProgressPageState extends State<RunProgressPage> {
                     'Enable location services for this App using the device settings.');
           }
 
+          if (widget.route.isNotEmpty) MyMapboxMap.instance.draw(widget.route);
+
           return SafeArea(
             child: _stopped
                 ? const Center(child: CircularProgressIndicator())
                 : Stack(
                     children: <Widget>[
                       Container(
-                        child: MapboxMap(
-                          myLocationEnabled: true,
-                          myLocationTrackingMode:
-                              MyLocationTrackingMode.Tracking,
-                          styleString: MapboxStyles.LIGHT,
-                          onMapCreated: (controller) =>
-                              mapController = controller,
-                          onStyleLoadedCallback: () {
-                            if (widget.route.isNotEmpty) {
-                              RouteDrawer.drawRoute(
-                                  route: widget.route,
-                                  controller: mapController,
-                                  opacity: 0.5);
-                            }
-                          },
-                          initialCameraPosition:
-                              CameraPosition(target: LatLng(0, 0), zoom: 17),
-                          rotateGesturesEnabled: false,
-                          tiltGesturesEnabled: false,
-                          zoomGesturesEnabled: false,
-                          scrollGesturesEnabled: false,
-                          myLocationRenderMode: MyLocationRenderMode.NORMAL,
-                        ),
+                        // child: MapboxMap(
+                        //   myLocationEnabled: true,
+                        //   myLocationTrackingMode:
+                        //       MyLocationTrackingMode.Tracking,
+                        //   styleString: MapboxStyles.LIGHT,
+                        //   onMapCreated: (controller) =>
+                        //       mapController = controller,
+                        //   onStyleLoadedCallback: () {
+                        //     if (widget.route.isNotEmpty) {
+                        //       RouteDrawer.drawRoute(
+                        //           route: widget.route,
+                        //           controller: mapController,
+                        //           opacity: 0.5);
+                        //     }
+                        //   },
+                        //   initialCameraPosition:
+                        //       CameraPosition(target: LatLng(0, 0), zoom: 17),
+                        //   rotateGesturesEnabled: false,
+                        //   tiltGesturesEnabled: false,
+                        //   zoomGesturesEnabled: false,
+                        //   scrollGesturesEnabled: false,
+                        //   myLocationRenderMode: MyLocationRenderMode.NORMAL,
+                        // ),
+                        child: MyMapboxMap.instance.map,
                         width: screenWidth,
                         height: screenHeight,
                       ),
