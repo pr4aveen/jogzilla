@@ -18,10 +18,6 @@ class RecentRunTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime dateTime = DateTime.parse(runData.dateTime);
-    String date = DateFormat('MMM dd').format(dateTime);
-    String time = DateFormat('jm').format(dateTime);
-
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
@@ -51,13 +47,13 @@ class RecentRunTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    date,
+                    DateFormat('MMM dd').format(runData.dateTime),
                     style: TextStyle(
                       fontSize: 13,
                     ),
                   ),
                   Text(
-                    time,
+                    DateFormat('jm').format(runData.dateTime),
                     style: TextStyle(
                       fontSize: 13,
                     ),
@@ -69,7 +65,7 @@ class RecentRunTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      runData.distance,
+                      runData.distance.toString(),
                       style: TextStyle(fontSize: 24),
                     ),
                     Text(

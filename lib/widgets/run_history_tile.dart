@@ -11,9 +11,6 @@ class RunHistoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    DateTime dateTime = DateTime.parse(data.dateTime);
-    String dateString = DateFormat('dd MMM yyyy h:mm a').format(dateTime);
-
     return GestureDetector(
       onTap: () {
         Navigator.of(context)
@@ -45,7 +42,9 @@ class RunHistoryTile extends StatelessWidget {
                         SizedBox(
                           height: 2.0,
                         ),
-                        Text(dateString,
+                        Text(
+                            DateFormat('dd MMM yyyy h:mm a')
+                                .format(data.dateTime),
                             style: Theme.of(context).textTheme.caption),
                         SizedBox(height: 15.0),
                         Row(
@@ -53,7 +52,7 @@ class RunHistoryTile extends StatelessWidget {
                           children: <Widget>[
                             RunDataItem(
                               label: 'Distance',
-                              value: data.distance,
+                              value: data.distance.toString(),
                             ),
                             Container(
                               height: 35,
@@ -61,7 +60,7 @@ class RunHistoryTile extends StatelessWidget {
                             ),
                             RunDataItem(
                               label: 'Pace',
-                              value: data.pace,
+                              value: data.pace.toString(),
                             ),
                             Container(
                               height: 35,
@@ -69,7 +68,7 @@ class RunHistoryTile extends StatelessWidget {
                             ),
                             RunDataItem(
                               label: 'Time',
-                              value: data.duration,
+                              value: data.duration.toString(),
                             ),
                           ],
                         )

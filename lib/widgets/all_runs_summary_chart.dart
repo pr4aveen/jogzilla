@@ -16,7 +16,7 @@ class AllRunsSummarryChart extends StatelessWidget {
   String _getTotalDistance() {
     double totalDistance = 0;
     for (int i = 0; i < allRuns.length; i++) {
-      totalDistance += double.parse(allRuns[i].distance);
+      totalDistance += allRuns[i].distance;
     }
     return totalDistance.toString();
   }
@@ -72,10 +72,8 @@ class AllRunsSummarryChart extends StatelessWidget {
                 ),
                 lineBarsData: [
                   LineChartBarData(
-                    spots: List.generate(
-                        allRuns.length,
-                        (i) => FlSpot(
-                            i.toDouble(), double.parse(allRuns[i].distance))),
+                    spots: List.generate(allRuns.length,
+                        (i) => FlSpot(i.toDouble(), allRuns[i].distance)),
                     colors: gradientColors,
                     barWidth: 7,
                   ),

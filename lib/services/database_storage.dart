@@ -100,7 +100,7 @@ class DatabaseStorage {
       var response =
           await db.query(table, where: '$columnRunId = ?', whereArgs: [count]);
       RunData temp = RunData.fromMap(response[0]);
-      if (today.difference(DateTime.parse(temp.dateTime)).inDays < 5) {
+      if (today.difference(temp.dateTime).inDays < 5) {
         runs.add(temp);
       } else {
         return runs;

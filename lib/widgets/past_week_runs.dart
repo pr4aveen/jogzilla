@@ -16,8 +16,7 @@ class PastWeekRuns extends StatelessWidget {
     for (int i = 0; i < pastWeekRuns.length; i++) {
       RunData current = pastWeekRuns[i];
 
-      Duration timeDifference =
-          DateTime.parse(current.dateTime).difference(today);
+      Duration timeDifference = current.dateTime.difference(today);
 
       if (timeDifference.isNegative) {
         pastWeekRunsByDay[timeDifference.inDays + 5].add(current);
@@ -30,7 +29,7 @@ class PastWeekRuns extends StatelessWidget {
         pastWeekRunsByDay.map((runsPerDay) {
       double totalDistancePerDay = 0;
       for (int i = 0; i < runsPerDay.length; i++) {
-        totalDistancePerDay += double.parse(runsPerDay[i].distance);
+        totalDistancePerDay += runsPerDay[i].distance;
       }
       return BarChartRodData(
           y: totalDistancePerDay, color: Colors.lightBlueAccent);

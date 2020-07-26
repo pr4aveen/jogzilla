@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:jogzilla/models/run_data.dart';
-import 'package:jogzilla/services/calories_calculator.dart';
-import 'package:jogzilla/widgets/overview_item.dart';
+
+import '../models/run_data.dart';
+import '../widgets/overview_item.dart';
 
 class RunSummary extends StatelessWidget {
   final RunData runData;
@@ -53,7 +53,7 @@ class RunSummary extends StatelessWidget {
                 top: 40,
               ),
               child: Text(
-                runData.distance + ' km',
+                runData.distance.toString() + ' km',
                 style: const TextStyle(
                   fontSize: 60,
                 ),
@@ -70,11 +70,17 @@ class RunSummary extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 OverviewItem(
-                    title: runData.duration, subtitle: 'DURATION', bold: false),
+                    title: runData.duration.toString(),
+                    subtitle: 'DURATION',
+                    bold: false),
                 OverviewItem(
-                    title: runData.pace, subtitle: 'PACE', bold: false),
+                    title: runData.pace.toString(),
+                    subtitle: 'PACE',
+                    bold: false),
                 OverviewItem(
-                    title: runData.calories, subtitle: 'CALORIES', bold: false),
+                    title: runData.calories.toString(),
+                    subtitle: 'CALORIES',
+                    bold: false),
               ],
             ),
             SizedBox(

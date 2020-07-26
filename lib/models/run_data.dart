@@ -4,11 +4,11 @@ import 'package:mapbox_gl/mapbox_gl.dart';
 
 class RunData {
   final int runId;
-  final String dateTime;
-  final String distance;
-  final String duration;
-  final String pace;
-  final String calories;
+  final DateTime dateTime;
+  final double distance;
+  final int duration;
+  final double pace;
+  final double calories;
   final List<LatLng> positions;
   String title;
   String description;
@@ -28,7 +28,7 @@ class RunData {
   Map<String, dynamic> toMap() {
     return {
       'runId': runId,
-      'dateTime': dateTime,
+      'dateTime': dateTime.toString(),
       'distance': distance,
       'duration': duration,
       'pace': pace,
@@ -43,11 +43,11 @@ class RunData {
     print(json['positions']);
     return new RunData(
       runId: json['runID'],
-      dateTime: json['dateTime'].toString(),
-      distance: json['distance'].toString(),
-      duration: json['duration'].toString(),
-      pace: json['pace'].toString(),
-      calories: json['calories'].toString(),
+      dateTime: DateTime.parse(json['dateTime']),
+      distance: json['distance'],
+      duration: json['duration'],
+      pace: json['pace'],
+      calories: json['calories'],
       positions: List<LatLng>.from(
           jsonDecode(json['positions']).map((pos) => LatLng(pos[0], pos[1]))),
       title: json['title'],

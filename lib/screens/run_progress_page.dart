@@ -26,7 +26,7 @@ class _RunProgressPageState extends State<RunProgressPage> {
   double _totalDistance = 0.0;
   bool _listening = false;
   int _totalSeconds = 0;
-  String _timeToDisplay = "00h 00m 00s";
+  String _timeToDisplay = "00:00";
   double _avgSpeed = 0.0;
   bool _stopped = false;
 
@@ -40,12 +40,9 @@ class _RunProgressPageState extends State<RunProgressPage> {
   void _stopwatchCallback(
       {String hours, String minutes, String seconds, int totalSeconds}) {
     if (this.mounted) {
-      String timeString = seconds + 's';
-      if (minutes != "00") {
-        timeString = '${minutes}m $timeString';
-      }
+      String timeString = '$minutes:$seconds';
       if (hours != "00") {
-        timeString = '${hours}m $timeString';
+        timeString = '$hours:$timeString';
       }
       setState(() {
         _timeToDisplay = timeString;
@@ -97,19 +94,16 @@ class _RunProgressPageState extends State<RunProgressPage> {
     int runId = await storage.queryRowCount() + 1;
     List<LatLng> positions = List<LatLng>.from(
         _positions.map((pos) => LatLng(pos.latitude, pos.longitude)));
-    String distance = _totalDistance.toString();
-    String duration = _totalSeconds.toString();
-    String dateTime = DateTime.now().toString();
-    String pace = _avgSpeed.toString();
-    String calories = CaloriesCalculator().calculate(_totalDistance).toString();
+
+    Function twoDP = (double db) => double.parse(db.toStringAsFixed(2));
 
     RunData runData = RunData(
       runId: runId,
-      dateTime: dateTime,
-      duration: duration,
-      distance: distance,
-      pace: pace,
-      calories: calories,
+      dateTime: DateTime.now(),
+      duration: _totalSeconds,
+      distance: twoDP(_totalDistance),
+      pace: twoDP(_avgSpeed),
+      calories: twoDP(CaloriesCalculator().calculate(_totalDistance)),
       positions: positions,
     );
 
