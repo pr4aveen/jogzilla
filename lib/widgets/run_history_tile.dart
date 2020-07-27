@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:jogzilla/services/stopwatch_service.dart';
 
 import '../models/run_data.dart';
 import '../screens/detailed_run_history_page.dart';
@@ -52,7 +53,7 @@ class RunHistoryTile extends StatelessWidget {
                           children: <Widget>[
                             RunDataItem(
                               label: 'Distance',
-                              value: data.distance.toString(),
+                              value: data.distance.toString() + ' km',
                             ),
                             Container(
                               height: 35,
@@ -60,7 +61,7 @@ class RunHistoryTile extends StatelessWidget {
                             ),
                             RunDataItem(
                               label: 'Pace',
-                              value: data.pace.toString(),
+                              value: data.pace.toString() + ' km/h',
                             ),
                             Container(
                               height: 35,
@@ -68,7 +69,8 @@ class RunHistoryTile extends StatelessWidget {
                             ),
                             RunDataItem(
                               label: 'Time',
-                              value: data.duration.toString(),
+                              value: StopwatchService.secondsToDuration(
+                                  data.duration),
                             ),
                           ],
                         )

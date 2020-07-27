@@ -54,4 +54,11 @@ class StopwatchService {
       _startTimer();
     }
   }
+
+  static String secondsToDuration(int seconds) {
+    String s = (seconds % 60).toString().padLeft(2, '0');
+    String m = ((seconds ~/ 60) % 60).toString().padLeft(2, '0');
+    String h = (seconds ~/ 3600).toString().padLeft(2, '0');
+    return h == '00' ? m + ':' + s : h + ':' + m + ':' + s;
+  }
 }

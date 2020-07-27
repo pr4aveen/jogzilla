@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jogzilla/services/stopwatch_service.dart';
 
 import './overview_item.dart';
 import '../models/run_data.dart';
@@ -60,11 +61,14 @@ class RunSummaryHeader extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             OverviewItem(
-                title: runData.duration.toString(),
+                title: StopwatchService.secondsToDuration(runData.duration),
                 subtitle: 'DURATION',
                 bold: false),
             OverviewItem(
-                title: runData.pace.toString(), subtitle: 'PACE', bold: false),
+              title: runData.pace.toString() + ' km/h',
+              subtitle: 'PACE',
+              bold: false,
+            ),
             OverviewItem(
                 title: runData.calories.toString(),
                 subtitle: 'CALORIES',
