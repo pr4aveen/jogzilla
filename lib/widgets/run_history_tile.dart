@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:jogzilla/services/stopwatch_service.dart';
 
+import './run_data_item.dart';
 import '../models/run_data.dart';
 import '../screens/detailed_run_history_page.dart';
-import './run_data_item.dart';
+import '../services/stopwatch_service.dart';
 
 class RunHistoryTile extends StatelessWidget {
   final RunData data;

@@ -1,7 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
-
 import 'package:flutter/material.dart';
-import 'package:jogzilla/models/run_data.dart';
+
+import '../models/run_data.dart';
 
 class AllRunsSummarryChart extends StatelessWidget {
   final List<RunData> allRuns;

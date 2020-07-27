@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import 'package:jogzilla/models/run_data.dart';
 import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
+
+import '../models/run_data.dart';
 
 class DatabaseStorage {
   static final String _databaseName = "MyDatabase.db";

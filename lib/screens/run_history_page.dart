@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:jogzilla/widgets/all_runs_summary_chart.dart';
-import 'package:jogzilla/widgets/overview_item.dart';
 
 import '../models/run_data.dart';
 import '../services/database_storage.dart';
+import '../widgets/all_runs_summary_chart.dart';
 import '../widgets/navigation_drawer.dart';
+import '../widgets/overview_item.dart';
 import '../widgets/run_history_tile.dart';
 
 class RunHistoryPage extends StatelessWidget {
@@ -22,7 +22,7 @@ class RunHistoryPage extends StatelessWidget {
         future: storage.queryAllRuns(),
         builder: (BuildContext context, AsyncSnapshot<List<RunData>> snapshot) {
           if (snapshot.hasData) {
-            return snapshot.data.length > 0
+            return snapshot.data.length == 0
                 ? Center(
                     child: OverviewItem(
                       title: 'Run History Unavailable',

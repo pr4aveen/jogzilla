@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jogzilla/widgets/run_summary_header.dart';
 
 import '../models/run_data.dart';
 import '../widgets/run_summary_header.dart';

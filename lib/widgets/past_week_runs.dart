@@ -1,7 +1,8 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:jogzilla/models/run_data.dart';
-import 'package:jogzilla/services/database_storage.dart';
+
+import '../models/run_data.dart';
+import '../services/database_storage.dart';
 
 class PastWeekRuns extends StatelessWidget {
   final DateTime now;

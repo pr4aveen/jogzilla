@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jogzilla/services/stopwatch_service.dart';
 
 import './overview_item.dart';
 import '../models/run_data.dart';
+import '../services/stopwatch_service.dart';
 
 class RunSummaryHeader extends StatelessWidget {
   final RunData runData;

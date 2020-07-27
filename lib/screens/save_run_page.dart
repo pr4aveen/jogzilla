@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:intl/intl.dart';
+import 'package:mapbox_gl/mapbox_gl.dart';
 
 import '../models/run_data.dart';
 import '../screens/run_history_page.dart';
