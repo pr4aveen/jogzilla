@@ -26,13 +26,6 @@ class _SaveRunPageState extends State<SaveRunPage> {
 
   final DatabaseStorage _storage = DatabaseStorage.instance;
 
-  @override
-  void dispose() {
-    mapController.dispose();
-    mapController = null;
-    super.dispose();
-  }
-
   void _saveRunData() {
     widget.runData.title = _runTitle == null ? _defaultTitle : _runTitle;
     widget.runData.description = _runDescription == null ? '' : _runDescription;
@@ -55,8 +48,6 @@ class _SaveRunPageState extends State<SaveRunPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (widget.runData.positions.isNotEmpty)
-      MyMapboxMap.instance.draw(widget.runData.positions);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -67,26 +58,21 @@ class _SaveRunPageState extends State<SaveRunPage> {
         child: ListView(
           children: <Widget>[
             Container(
-              // child: MapboxMap(
-              //   onMapCreated: (controller) {
-              //     mapController = controller;
-              //     print('map loaded');
-              //     if (widget.runData.positions.isNotEmpty) {
-              //       RouteDrawer.drawRoute(
-              //           route: widget.runData.positions,
-              //           controller: mapController);
-              //     }
-              //   },
-              //   onStyleLoadedCallback: () {
-              //     print('style loaded');
-              //   },
-              //   initialCameraPosition:
-              //       CameraPosition(target: LatLng(0, 0), zoom: 8),
-              //   styleString: MapboxStyles.LIGHT,
-              //   rotateGesturesEnabled: false,
-              //   tiltGesturesEnabled: false,
-              // ),
-              child: MyMapboxMap.instance.map,
+              child: MapboxMap(
+                onMapCreated: (controller) {
+                  mapController = controller;
+                  if (widget.runData.positions.isNotEmpty) {
+                    RouteDrawer.drawRoute(
+                        route: widget.runData.positions,
+                        controller: mapController);
+                  }
+                },
+                initialCameraPosition:
+                    CameraPosition(target: LatLng(0, 0), zoom: 8),
+                styleString: MapboxStyles.LIGHT,
+                rotateGesturesEnabled: false,
+                tiltGesturesEnabled: false,
+              ),
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * 0.65,
             ),
