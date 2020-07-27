@@ -3,14 +3,14 @@ import 'package:flutter/foundation.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 
 class RouteDrawer {
-  static void drawRoute(
+  static Future<void> drawRoute(
       {@required List<LatLng> route,
       @required MapboxMapController controller,
-      double opacity}) {
-    print('route ' + route.toString());
-    assert(controller != null, 'assertion');
-    controller.clearLines();
-    controller.clearCircles();
+      double opacity}) async {
+    // print('route ' + route.toString());
+    assert(controller != null, 'routeDrawer.drawroute: controller is null');
+    await controller.clearLines();
+    await controller.clearCircles();
 
     double _centerLatitude = 0;
     double _centerLongitude = 0;
@@ -25,9 +25,9 @@ class RouteDrawer {
 
     LatLng newCenter = LatLng(_centerLatitude, _centerLongitude);
     CameraUpdate cameraUpdate = CameraUpdate.newLatLngZoom(newCenter, 14);
-    controller.moveCamera(cameraUpdate);
+    await controller.moveCamera(cameraUpdate);
 
-    controller.addLine(
+    await controller.addLine(
       LineOptions(
         geometry: route,
         lineWidth: 7,
@@ -36,7 +36,7 @@ class RouteDrawer {
       ),
     );
 
-    controller.addCircle(CircleOptions(
+    await controller.addCircle(CircleOptions(
       circleRadius: 5,
       geometry: route.elementAt(0),
       circleColor: '#ff0000',

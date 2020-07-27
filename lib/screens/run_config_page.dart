@@ -50,8 +50,7 @@ class _RunConfigPageState extends State<RunConfigPage> {
 
     route = await routeGenerator.generateRoute(0.1);
     _generated = true;
-    // RouteDrawer.drawRoute(controller: mapController, route: route);
-    MyMapboxMap.instance.draw(route);
+    await RouteDrawer.drawRoute(controller: mapController, route: route);
     setState(() {
       _actualDistance = routeGenerator.actualDistance;
       _isGenerating = false;
@@ -77,21 +76,20 @@ class _RunConfigPageState extends State<RunConfigPage> {
                 Stack(
                   children: <Widget>[
                     Container(
-                      // child: MapboxMap(
-                      //   myLocationEnabled: true,
-                      //   myLocationTrackingMode: MyLocationTrackingMode.Tracking,
-                      //   styleString: MapboxStyles.LIGHT,
-                      //   onMapCreated: (controller) =>
-                      //       mapController = controller,
-                      //   initialCameraPosition:
-                      //       CameraPosition(target: snapshot.data, zoom: 14),
-                      //   rotateGesturesEnabled: false,
-                      //   tiltGesturesEnabled: false,
-                      //   zoomGesturesEnabled: false,
-                      //   scrollGesturesEnabled: false,
-                      //   myLocationRenderMode: MyLocationRenderMode.NORMAL,
-                      // ),
-                      child: MyMapboxMap.instance.map,
+                      child: MapboxMap(
+                        myLocationEnabled: true,
+                        myLocationTrackingMode: MyLocationTrackingMode.Tracking,
+                        styleString: MapboxStyles.LIGHT,
+                        onMapCreated: (controller) =>
+                            mapController = controller,
+                        initialCameraPosition:
+                            CameraPosition(target: snapshot.data, zoom: 14),
+                        rotateGesturesEnabled: false,
+                        tiltGesturesEnabled: false,
+                        zoomGesturesEnabled: false,
+                        scrollGesturesEnabled: false,
+                        myLocationRenderMode: MyLocationRenderMode.NORMAL,
+                      ),
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height * 0.60,
                     ),
