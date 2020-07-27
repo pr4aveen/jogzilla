@@ -61,7 +61,7 @@ class HomePageBody extends StatelessWidget {
     for (int i = 0; i < runs.length; i++) {
       totalDistance += runs[i].distance;
     }
-    return totalDistance.toString() + ' km';
+    return totalDistance.toStringAsFixed(2) + ' km';
   }
 
   String _avgPace() {
@@ -134,8 +134,18 @@ class HomePageBody extends StatelessWidget {
                 height: height * 0.25,
                 width: width * 0.85,
                 decoration: cardDecoration,
-                padding: EdgeInsets.only(top: height * 0.02),
-                child: Center(child: PastWeekRuns(now: DateTime.now())),
+                padding:
+                    EdgeInsets.only(top: runs.length > 0 ? height * 0.02 : 0),
+                child: Center(
+                  child: runs.length > 0
+                      ? PastWeekRuns(now: DateTime.now())
+                      : Text(
+                          'No runs yet',
+                          style: TextStyle(
+                            fontSize: 32,
+                          ),
+                        ),
+                ),
               ),
               Container(
                 width: width * 0.85,

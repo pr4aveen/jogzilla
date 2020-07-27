@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jogzilla/widgets/all_runs_summary_chart.dart';
+import 'package:jogzilla/widgets/overview_item.dart';
 
 import '../models/run_data.dart';
 import '../services/database_storage.dart';
@@ -21,24 +22,32 @@ class RunHistoryPage extends StatelessWidget {
         future: storage.queryAllRuns(),
         builder: (BuildContext context, AsyncSnapshot<List<RunData>> snapshot) {
           if (snapshot.hasData) {
-            return CustomScrollView(
-              slivers: <Widget>[
-                SliverToBoxAdapter(
-                  // placeholder until statistics widget is ready
-                  child: AllRunsSummarryChart(allRuns: snapshot.data),
-                ),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return RunHistoryTile(
-                        data: snapshot.data[snapshot.data.length - index - 1],
-                      );
-                    },
-                    childCount: snapshot.data.length,
-                  ),
-                ),
-              ],
-            );
+            return snapshot.data.length > 0
+                ? Center(
+                    child: OverviewItem(
+                      title: 'Run History Unavailable',
+                      subtitle: 'Now would be a good time to go for a run',
+                      bold: false,
+                    ),
+                  )
+                : CustomScrollView(
+                    slivers: <Widget>[
+                      SliverToBoxAdapter(
+                        child: AllRunsSummarryChart(allRuns: snapshot.data),
+                      ),
+                      SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            return RunHistoryTile(
+                              data: snapshot
+                                  .data[snapshot.data.length - index - 1],
+                            );
+                          },
+                          childCount: snapshot.data.length,
+                        ),
+                      ),
+                    ],
+                  );
           } else {
             return const Center(child: CircularProgressIndicator());
           }

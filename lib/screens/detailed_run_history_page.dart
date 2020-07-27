@@ -42,7 +42,6 @@ class _DetailedRunHistoryPageState extends State<DetailedRunHistoryPage> {
                   RouteDrawer.drawRoute(
                       route: widget.runData.positions,
                       controller: mapController);
-                  print('drawn');
                 },
                 styleString: MapboxStyles.LIGHT,
                 rotateGesturesEnabled: false,

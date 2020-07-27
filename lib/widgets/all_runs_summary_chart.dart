@@ -18,7 +18,7 @@ class AllRunsSummarryChart extends StatelessWidget {
     for (int i = 0; i < allRuns.length; i++) {
       totalDistance += allRuns[i].distance;
     }
-    return totalDistance.toString();
+    return totalDistance.toStringAsFixed(2);
   }
 
   @override

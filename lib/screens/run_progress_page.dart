@@ -108,8 +108,6 @@ class _RunProgressPageState extends State<RunProgressPage> {
       calories: twoDP(CaloriesCalculator().calculate(_totalDistance)),
       positions: positions,
     );
-
-    print('run completed ' + positions.toString());
     return runData;
   }
 
