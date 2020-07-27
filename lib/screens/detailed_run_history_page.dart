@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:share/share.dart';
 
 import '../models/run_data.dart';
 import '../services/route_drawer.dart';
@@ -29,6 +30,13 @@ class _DetailedRunHistoryPageState extends State<DetailedRunHistoryPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.runData.title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.share),
+            onPressed: () => Share.share(
+                'Check out my ${widget.runData.distance} km run on jogzilla!'),
+          )
+        ],
       ),
       body: SafeArea(
         child: ListView(
