@@ -7,6 +7,7 @@ import '../screens/run_history_page.dart';
 import '../screens/run_progress_page.dart';
 import '../screens/save_run_page.dart';
 import '../screens/settings_page.dart';
+import '../screens/profile_page.dart';
 
 class RouteGenerator {
   static String initialRoute = HomePage.routeName;
@@ -48,6 +49,10 @@ class RouteGenerator {
       case SettingsPage.routeName:
         return MaterialPageRoute(
           builder: (_) => SettingsPage(),
+        );
+      case ProfilePage.routeName:
+        return MaterialPageRoute(
+          builder: (_) => ProfilePage(),
         );
       default:
         return MaterialPageRoute(

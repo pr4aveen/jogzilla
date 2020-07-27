@@ -5,6 +5,8 @@ import '../screens/home_page.dart';
 import '../screens/run_config_page.dart';
 import '../screens/run_history_page.dart';
 import '../screens/run_progress_page.dart';
+import '../screens/profile_page.dart';
+import '../screens/settings_page.dart';
 
 class NavigationDrawer extends StatelessWidget {
   @override
@@ -18,6 +20,11 @@ class NavigationDrawer extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(top: 50.0, bottom: 10),
               child: CircleAvatar(
+                child: Icon(
+                  Icons.person,
+                  size: 100,
+                  color: Colors.grey[300],
+                ),
                 backgroundColor: Theme.of(context).primaryColor,
                 radius: 55,
               ),
@@ -42,6 +49,7 @@ class NavigationDrawer extends StatelessWidget {
             NavigationDrawerItem(
               title: 'My Profile',
               icon: Icons.person,
+              targetDestination: ProfilePage.routeName,
             ),
             NavigationDrawerItem(
               title: 'Start New Run',
@@ -63,6 +71,7 @@ class NavigationDrawer extends StatelessWidget {
             NavigationDrawerItem(
               title: 'Settings',
               icon: Icons.settings,
+              targetDestination: SettingsPage.routeName,
             )
           ],
         ),
