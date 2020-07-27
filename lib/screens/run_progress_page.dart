@@ -179,7 +179,8 @@ class _RunProgressPageState extends State<RunProgressPage> {
                               RouteDrawer.drawRoute(
                                   route: widget.route,
                                   controller: mapController,
-                                  opacity: 0.5);
+                                  opacity: 0.5,
+                                  modifyCenter: false);
                             }
                           },
                           initialCameraPosition:
@@ -286,12 +287,12 @@ class _RunProgressPageState extends State<RunProgressPage> {
                                         ),
                                       ),
                                       onTap: () async {
-                                          Navigator.of(context)
-                                              .pushNamedAndRemoveUntil(
-                                            SaveRunPage.routeName,
-                                            (_) => false,
-                                            arguments: await _completeRun,
-                                          );
+                                        Navigator.of(context)
+                                            .pushNamedAndRemoveUntil(
+                                          SaveRunPage.routeName,
+                                          (_) => false,
+                                          arguments: await _completeRun,
+                                        );
                                       },
                                     ),
                                   ),

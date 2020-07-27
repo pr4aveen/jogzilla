@@ -3,7 +3,9 @@ import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:share/share.dart';
 
 import '../models/run_data.dart';
+import '../screens/run_progress_page.dart';
 import '../services/route_drawer.dart';
+import '../widgets/custom_rounded_button.dart';
 import '../widgets/run_summary_header.dart';
 
 class DetailedRunHistoryPage extends StatefulWidget {
@@ -27,6 +29,8 @@ class _DetailedRunHistoryPageState extends State<DetailedRunHistoryPage> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.runData.title),
@@ -55,14 +59,27 @@ class _DetailedRunHistoryPageState extends State<DetailedRunHistoryPage> {
                 rotateGesturesEnabled: false,
                 tiltGesturesEnabled: false,
               ),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * 0.65,
+              width: width,
+              height: height * 0.65,
             ),
             RunSummaryHeader(
               runData: widget.runData,
             ),
-            SizedBox(
-              height: 20,
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: CustomRoundedButton(
+                  height: height * 0.08,
+                  width: width * 0.1,
+                  onTap: () => {
+                        Navigator.pushNamedAndRemoveUntil(
+                          context,
+                          RunProgressPage.routeName,
+                          (_) => false,
+                          arguments: widget.runData.positions,
+                        )
+                      },
+                  title: 'Run this route again',
+                  color: Colors.lightBlueAccent),
             ),
           ],
         ),

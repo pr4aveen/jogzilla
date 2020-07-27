@@ -5,25 +5,27 @@ class RouteDrawer {
   static Future<void> drawRoute(
       {@required List<LatLng> route,
       @required MapboxMapController controller,
+      bool modifyCenter = true,
       double opacity}) async {
     await controller.clearLines();
     await controller.clearCircles();
 
-    double _centerLatitude = 0;
-    double _centerLongitude = 0;
+    if (modifyCenter) {
+      double _centerLatitude = 0;
+      double _centerLongitude = 0;
 
-    for (int i = 0; i < route.length; i++) {
-      _centerLatitude += route[i].latitude;
-      _centerLongitude += route[i].longitude;
+      for (int i = 0; i < route.length; i++) {
+        _centerLatitude += route[i].latitude;
+        _centerLongitude += route[i].longitude;
+      }
+
+      _centerLatitude /= route.length;
+      _centerLongitude /= route.length;
+
+      LatLng newCenter = LatLng(_centerLatitude, _centerLongitude);
+      CameraUpdate cameraUpdate = CameraUpdate.newLatLngZoom(newCenter, 14);
+      await controller.moveCamera(cameraUpdate);
     }
-
-    _centerLatitude /= route.length;
-    _centerLongitude /= route.length;
-
-    LatLng newCenter = LatLng(_centerLatitude, _centerLongitude);
-    CameraUpdate cameraUpdate = CameraUpdate.newLatLngZoom(newCenter, 14);
-    await controller.moveCamera(cameraUpdate);
-
     await controller.addLine(
       LineOptions(
         geometry: route,
