@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
+import 'package:wakelock/wakelock.dart';
 
 import '../models/run_data.dart';
 import '../screens/save_run_page.dart';
@@ -118,6 +119,7 @@ class _RunProgressPageState extends State<RunProgressPage> {
         StopwatchService(timeToDisplayCallback: _stopwatchCallback);
     locationService =
         LocationService(locationServiceCallback: _locationServiceCallback);
+    Wakelock.enable();
   }
 
   @override
@@ -128,6 +130,7 @@ class _RunProgressPageState extends State<RunProgressPage> {
     locationService = null;
     stopwatchService = null;
     mapController = null;
+    Wakelock.disable();
     super.dispose();
   }
 
@@ -283,12 +286,12 @@ class _RunProgressPageState extends State<RunProgressPage> {
                                         ),
                                       ),
                                       onTap: () async {
-                                        Navigator.of(context)
-                                            .pushNamedAndRemoveUntil(
-                                          SaveRunPage.routeName,
-                                          (_) => false,
-                                          arguments: await _completeRun,
-                                        );
+                                          Navigator.of(context)
+                                              .pushNamedAndRemoveUntil(
+                                            SaveRunPage.routeName,
+                                            (_) => false,
+                                            arguments: await _completeRun,
+                                          );
                                       },
                                     ),
                                   ),
