@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:jogzilla/services/my_mapbox_map.dart';
-import 'package:jogzilla/services/route_drawer.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 
 import '../models/run_data.dart';
@@ -9,6 +7,7 @@ import '../screens/save_run_page.dart';
 import '../services/calories_calculator.dart';
 import '../services/database_storage.dart';
 import '../services/location_service.dart';
+import '../services/route_drawer.dart';
 import '../services/stopwatch_service.dart';
 import '../widgets/placeholder_widget.dart';
 import '../widgets/run_data_item.dart';
@@ -127,10 +126,10 @@ class _RunProgressPageState extends State<RunProgressPage> {
   void dispose() {
     locationService.dispose();
     stopwatchService.dispose();
-    // mapController.dispose();
+    mapController.dispose();
     locationService = null;
     stopwatchService = null;
-    // mapController = null;
+    mapController = null;
     super.dispose();
   }
 

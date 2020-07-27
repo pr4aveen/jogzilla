@@ -31,7 +31,7 @@ class RunHistoryPage extends StatelessWidget {
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
                       return RunHistoryTile(
-                        data: snapshot.data[index],
+                        data: snapshot.data[snapshot.data.length - index - 1],
                       );
                     },
                     childCount: snapshot.data.length,

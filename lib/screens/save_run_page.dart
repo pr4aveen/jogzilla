@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jogzilla/services/my_mapbox_map.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:intl/intl.dart';
 
