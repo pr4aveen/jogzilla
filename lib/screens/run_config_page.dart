@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jogzilla/services/my_mapbox_map.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -32,7 +31,8 @@ class _RunConfigPageState extends State<RunConfigPage> {
 
   @override
   void dispose() {
-    // mapController.dispose();
+    mapController.dispose();
+    mapController = null;
     super.dispose();
   }
 

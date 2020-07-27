@@ -16,6 +16,14 @@ class DetailedRunHistoryPage extends StatefulWidget {
 
 class _DetailedRunHistoryPageState extends State<DetailedRunHistoryPage> {
   MapboxMapController mapController;
+
+  @override
+  void dispose() {
+    mapController.dispose();
+    mapController = null;
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +42,7 @@ class _DetailedRunHistoryPageState extends State<DetailedRunHistoryPage> {
                   RouteDrawer.drawRoute(
                       route: widget.runData.positions,
                       controller: mapController);
+                  print('drawn');
                 },
                 styleString: MapboxStyles.LIGHT,
                 rotateGesturesEnabled: false,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jogzilla/services/my_mapbox_map.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:intl/intl.dart';
 
@@ -25,6 +24,13 @@ class _SaveRunPageState extends State<SaveRunPage> {
   MapboxMapController mapController;
 
   final DatabaseStorage _storage = DatabaseStorage.instance;
+
+  @override
+  void dispose() {
+    mapController.dispose();
+    mapController = null;
+    super.dispose();
+  }
 
   void _saveRunData() {
     widget.runData.title = _runTitle == null ? _defaultTitle : _runTitle;

@@ -7,8 +7,6 @@ class RouteDrawer {
       {@required List<LatLng> route,
       @required MapboxMapController controller,
       double opacity}) async {
-    // print('route ' + route.toString());
-    assert(controller != null, 'routeDrawer.drawroute: controller is null');
     await controller.clearLines();
     await controller.clearCircles();
 
