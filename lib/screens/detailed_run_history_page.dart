@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:share/share.dart';
 
+import '../api_key.dart';
 import '../models/run_data.dart';
 import '../screens/run_progress_page.dart';
 import '../services/route_drawer.dart';
@@ -47,6 +48,7 @@ class _DetailedRunHistoryPageState extends State<DetailedRunHistoryPage> {
           children: <Widget>[
             Container(
               child: MapboxMap(
+                accessToken: API_KEY,
                 onMapCreated: (controller) => mapController = controller,
                 initialCameraPosition:
                     CameraPosition(target: LatLng(0, 0), zoom: 14),

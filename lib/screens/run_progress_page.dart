@@ -3,6 +3,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:wakelock/wakelock.dart';
 
+import '../api_key.dart';
 import '../models/run_data.dart';
 import '../screens/save_run_page.dart';
 import '../services/calories_calculator.dart';
@@ -167,6 +168,7 @@ class _RunProgressPageState extends State<RunProgressPage> {
                     children: <Widget>[
                       Container(
                         child: MapboxMap(
+                          accessToken: API_KEY,
                           myLocationEnabled: true,
                           myLocationTrackingMode:
                               MyLocationTrackingMode.Tracking,

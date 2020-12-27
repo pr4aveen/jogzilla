@@ -6,10 +6,6 @@ if (localPropertiesFile.exists()) {
     }
 }
 
-def localPropertyApiToken = localProperties.getProperty("MAPBOX_API_KEY")
-def systemEnvApiToken = System.getenv('MAPBOX_API_KEY')
-def MAPBOX_API_KEY = localPropertyApiToken != null ? localPropertyApiToken : systemEnvApiToken
-
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
@@ -47,7 +43,6 @@ android {
         targetSdkVersion 28
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
-        manifestPlaceholders = [MAPBOX_API_KEY: MAPBOX_API_KEY]
     }
 
     buildTypes {

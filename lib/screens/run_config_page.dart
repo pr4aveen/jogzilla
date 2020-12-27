@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:jogzilla/api_key.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 import 'package:geolocator/geolocator.dart';
 
+import '../api_key.dart';
 import './run_progress_page.dart';
 import '../services/route_drawer.dart';
 import '../services/route_generator.dart';
@@ -77,6 +79,7 @@ class _RunConfigPageState extends State<RunConfigPage> {
                   children: <Widget>[
                     Container(
                       child: MapboxMap(
+                        accessToken: API_KEY,
                         myLocationEnabled: true,
                         myLocationTrackingMode: MyLocationTrackingMode.Tracking,
                         styleString: MapboxStyles.LIGHT,

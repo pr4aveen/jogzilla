@@ -10,7 +10,6 @@
         android:name="io.flutter.app.FlutterApplication"
         android:label="jogzilla"
         android:icon="@mipmap/ic_launcher">
-        <meta-data android:name="com.mapbox.token" android:value="${MAPBOX_API_KEY}"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

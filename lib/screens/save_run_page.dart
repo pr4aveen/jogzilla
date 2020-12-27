@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:jogzilla/api_key.dart';
 import 'package:mapbox_gl/mapbox_gl.dart';
 
+import '../api_key.dart';
 import '../models/run_data.dart';
 import '../screens/run_history_page.dart';
 import '../services/database_storage.dart';
@@ -58,6 +60,7 @@ class _SaveRunPageState extends State<SaveRunPage> {
           children: <Widget>[
             Container(
               child: MapboxMap(
+                accessToken: API_KEY,
                 onMapCreated: (controller) {
                   mapController = controller;
                   if (widget.runData.positions.isNotEmpty) {
