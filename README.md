@@ -1,7 +1,9 @@
 
 # jogzilla
 
-jogzilla is a run-tracker application developed with Flutter. 
+jogzilla is a run-tracker application developed with Flutter.
+
+Video demo: https://drive.google.com/file/d/18w8GssAK4oyggm2Xvy1jWmd6JlEICyaw/view?usp=sharing
 
 ## Getting Started
 
